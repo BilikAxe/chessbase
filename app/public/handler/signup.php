@@ -1,19 +1,20 @@
 <?php
 
+session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $connection = new PDO("pgsql:host=db;dbname=dbname", 'dbuser', 'dbpwd');
 
-    $errorMessage = validate($_POST, $connection);
+    $errorMessages = validate($_POST, $connection);
 
-    if (empty($errorMessage)) {
-        $email = clearData($_POST['email'] ?? null);
-        $firstName = clearData($_POST['firstName'] ?? null);
-        $lastName = clearData($_POST['lastName'] ?? null);
-        $surname = clearData($_POST['surname'] ?? null);
-        $phoneNumber = clearData($_POST['phoneNumber'] ?? null);
-        $password = $_POST['password'] ?? null;
+    if (empty($errorMessages)) {
+        $email = clearData($_POST['email']);
+        $firstName = clearData($_POST['firstName']);
+        $lastName = clearData($_POST['lastName']);
+        $surname = clearData($_POST['surname']);
+        $phoneNumber = clearData($_POST['phoneNumber']);
+        $password = $_POST['password'];
 
         $password = password_hash($password, PASSWORD_DEFAULT);
 
@@ -30,11 +31,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'phone_number' => $phoneNumber,
             'password' => $password
         ]);
+
+        header("Location: /signin");
+        die;
     }
 }
 
 
-function clearData(?string $val): string
+function clearData(string $val): string
 {
     $val = trim($val);
     $val = stripslashes($val);
@@ -47,32 +51,32 @@ function validate(array $data, PDO $connection): array
 {
     $errorMessages = [];
 
-    $emailError = validationEmail($data, $connection);
+    $emailError = validateEmail($data, $connection);
     if (!empty($emailError)) {
         $errorMessages['email'] = $emailError;
     }
 
-    $firstNameError = validationFirstName($data);
+    $firstNameError = validateFirstName($data);
     if (!empty($firstNameError)) {
         $errorMessages['firstName'] = $firstNameError;
     }
 
-    $lastNameError = validationLastName($data);
+    $lastNameError = validateLastName($data);
     if (!empty($lastNameError)) {
         $errorMessages['lastName'] = $lastNameError;
     }
 
-    $surnameError = validationSurname($data);
+    $surnameError = validateSurname($data);
     if (!empty($surnameError)) {
         $errorMessages['surname'] = $surnameError;
     }
 
-    $phoneNumberError = validationPhoneNumber($data);
+    $phoneNumberError = validatePhoneNumber($data);
     if (!empty($phoneNumberError)) {
         $errorMessages['phoneNumber'] = $phoneNumberError;
     }
 
-    $passwordError = validationPassword($data);
+    $passwordError = validatePassword($data);
     if (!empty($passwordError)) {
         $errorMessages['password'] = $passwordError;
     }
@@ -81,32 +85,32 @@ function validate(array $data, PDO $connection): array
 }
 
 
-function validationEmail(?array $data, PDO $connection): string|null
+function validateEmail(array $data, PDO $connection): string|null
 {
-    $email = $data['email'];
+    $email = $data['email'] ?? null;
     if (empty($email)) {
         return 'Invalid Email';
+    } else {
+        $result = $connection->prepare("SELECT email FROM users WHERE email = ?");
+        $result->execute([$email]);
+        $exists = $result->fetch();
+
+        if ($exists) {
+            return "This email already exists";
+        }
     }
 
     if (strlen($email) < 6) {
         return 'Email is too short';
     }
 
-    $result = $connection->prepare("SELECT email FROM users WHERE email = ?");
-    $result->execute([$email]);
-    $exists = $result->fetch();
-
-    if ($exists) {
-        return "This email already exists";
-    }
-
     return null;
 }
 
 
-function validationFirstName(?array $data): string|null
+function validateFirstName(array $data): string|null
 {
-    $firstName = $data['firstName'];
+    $firstName = $data['firstName'] ?? null;
     if (empty($firstName)) {
         return 'Invalid First Name';
     }
@@ -119,9 +123,9 @@ function validationFirstName(?array $data): string|null
 }
 
 
-function validationLastName(?array $data): string|null
+function validateLastName(array $data): string|null
 {
-    $lastName = $data['lastName'];
+    $lastName = $data['lastName'] ?? null;
     if (empty($lastName)) {
         return 'Invalid Last Name';
     }
@@ -134,9 +138,9 @@ function validationLastName(?array $data): string|null
 }
 
 
-function validationSurname(?array $data): string|null
+function validateSurname(array $data): string|null
 {
-    $surname = $data['surname'];
+    $surname = $data['surname'] ?? null;
     if (empty($surname)) {
         return 'Invalid Surname';
     }
@@ -149,9 +153,9 @@ function validationSurname(?array $data): string|null
 }
 
 
-function validationPhoneNumber(?array $data): string|null
+function validatePhoneNumber(array $data): string|null
 {
-    $phoneNumber = $data['phoneNumber'];
+    $phoneNumber = $data['phoneNumber'] ?? null;
     if (empty($phoneNumber)) {
         return 'Invalid Phone Number';
     }
@@ -164,9 +168,9 @@ function validationPhoneNumber(?array $data): string|null
 }
 
 
-function validationPassword(?array $data): string|null
+function validatePassword(array $data): string|null
 {
-    $pass = $data['password'];
+    $pass = $data['password'] ?? null;
     if (empty($pass)) {
         return 'Invalid Password';
     }

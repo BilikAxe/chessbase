@@ -1,39 +1,31 @@
-<form action="" method="POST">
+<form action="signup" method="POST">
     <div class="container">
         <h1>Register</h1>
         <p>Please fill in this form to create an account.</p>
+
         <hr>
-
-
-        <label for="email"><b>Email</b></label>
-        <span style="color: red"><?php echo $errorMessage['email'] ?? ''; ?></span>
+        <label for="email"><b>Email   </b><span><?= $errorMessages['email'] ?? ''; ?></span></label>
         <input type="text" placeholder="Enter Email" name="email">
 
-        <label for="firstName"><b>First Name</b></label>
-        <span style="color: red"><?php echo $errorMessage['firstName'] ?? ''; ?></span>
+        <label for="firstName"><b>First Name   </b><span><?= $errorMessages['firstName'] ?? ''; ?></span></label>
         <input type="text" placeholder="Enter First Name" name="firstName">
 
-        <label for="lastName"><b>Last Name</b></label>
-        <span style="color: red"><?php echo $errorMessage['lastName'] ?? ''; ?></span>
+        <label for="lastName"><b>Last Name   </b><span><?= $errorMessages['lastName'] ?? ''; ?></span></label>
         <input type="text" placeholder="Enter Last Name" name="lastName">
 
-        <label for="surname"><b>Surname</b></label>
-        <span style="color: red"><?php echo $errorMessage['surname'] ?? ''; ?></span>
+        <label for="surname"><b>Surname   </b><span><?= $errorMessages['surname'] ?? ''; ?></span></label>
         <input type="text" placeholder="Enter Surname" name="surname">
 
-        <label for="phoneNumber"><b>Phone Number</b></label>
-        <span style="color: red"><?php echo $errorMessage['phoneNumber'] ?? ''; ?></span>
+        <label for="phoneNumber"><b>Phone Number   </b><span><?= $errorMessages['phoneNumber'] ?? ''; ?></span></label>
         <input type="text" placeholder="Enter Phone Number" name="phoneNumber">
 
-        <label for="psw"><b>Password</b></label>
-        <span style="color: red"><?php echo $errorMessage['password'] ?? ''; ?></span>
+        <label for="psw"><b>Password   </b><span><?= $errorMessages['password'] ?? ''; ?></span></label>
         <input type="password" placeholder="Enter Password" name="password">
         <hr>
 
         <button type="submit" class="registerbtn">REGISTER</button>
-        <a href="./handler/signin.php"> SING IN </a>
+        <a href="signin"> SING IN </a>
     </div>
-
 </form>
 <style>
     /** {box-sizing: border-box}*/
@@ -48,10 +40,16 @@
         z-index: 1;
         border-radius: 10px;
         max-width: 600px;
-        margin: 0 auto 50px;
+        margin: 40px auto;
         padding: 35px;
         background: #e0e0e0;
-        box-shadow:  -11px 11px 22px #bebebe, 11px -11px 22px #ffffff;
+        box-shadow:  -11px 11px 22px #395591, 11px -11px 22px #ff0005;
+    }
+
+    span {
+        color: red;
+        font-size: 13px;
+        font-family: fantasy;
     }
 
     label {
@@ -66,7 +64,7 @@
         padding: 15px;
         margin: 5px 0 15px 0;
         display: inline-block;
-        border: none;
+        border: 0;
         background: #f1f1f1;
     }
 
