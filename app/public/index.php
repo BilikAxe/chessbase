@@ -3,5 +3,6 @@
 
 
 
-require_once './forms/signup.phtml';
+require_once './handler/signup.php';
+
 
