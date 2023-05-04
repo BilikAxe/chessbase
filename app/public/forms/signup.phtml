@@ -30,23 +30,41 @@
         <input type="password" placeholder="Enter Password" name="password">
         <hr>
 
-        <button type="submit" class="registerbtn">Register</button>
+        <button type="submit" class="registerbtn">REGISTER</button>
+        <a href="#"> SING IN </a>
     </div>
 
 </form>
 <style>
-    * {box-sizing: border-box}
-
+    /** {box-sizing: border-box}*/
+    body {
+        background: #e0e0e0;
+    }
     /* Add padding to containers */
     .container {
-        padding: 16px;
+        flex-direction: column;
+        display: flex;
+        position: relative;
+        z-index: 1;
+        border-radius: 10px;
+        max-width: 600px;
+        margin: 0 auto 50px;
+        padding: 35px;
+        background: #e0e0e0;
+        box-shadow:  -11px 11px 22px #bebebe, 11px -11px 22px #ffffff;
+    }
+
+    label {
+        font-size: 13px;
+        font-family: fantasy;
+        color: #395591;
     }
 
     /* Full-width input fields */
     input[type=text], input[type=password] {
         width: 100%;
         padding: 15px;
-        margin: 5px 0 22px 0;
+        margin: 5px 0 15px 0;
         display: inline-block;
         border: none;
         background: #f1f1f1;
@@ -57,22 +75,37 @@
         outline: none;
     }
 
+    h1 {
+        font-family: fantasy;
+        color: #395591;
+    }
+
     /* Overwrite default styles of hr */
     hr {
         border: 1px solid #f1f1f1;
-        margin-bottom: 25px;
+        margin-bottom: 5px;
     }
 
     /* Set a style for the submit/register button */
     .registerbtn {
-        background-color: #4CAF50;
-        color: white;
-        padding: 16px 20px;
-        margin: 8px 0;
-        border: none;
+        font-family: 'Rasa Medium', monospace;
+        text-transform: uppercase;
+        outline: 0;
+        background: none;
+        width: 70%;
+        border: 0;
+        border-radius: 5px;
+        padding: 10px;
+        margin: auto;
+        font-weight: bold;
+        text-decoration: none;
+        color: navy;
+        font-size: 20px;
         cursor: pointer;
-        width: 100%;
-        opacity: 0.9;
+    }
+
+    .registerbtn:active {
+        background: #395591;
     }
 
     .registerbtn:hover {
@@ -81,7 +114,21 @@
 
     /* Add a blue text color to links */
     a {
-        color: dodgerblue;
+        background: none;
+        width: 30%;
+        color: navy;
+        padding: 8px 15px;
+        margin: 10px auto 0;
+        border-radius: 10px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 13px;
+        cursor: pointer;
+
+    }
+
+    a:active {
+        background: #395591;
     }
 
     /* Set a grey background color and center the text of the "sign in" section */
