@@ -184,4 +184,4 @@ function validatePassword(array $data): string|null
 
 
 
-require_once './forms/signup.phtml';
+require_once './views/signup.phtml';

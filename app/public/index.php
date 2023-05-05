@@ -2,18 +2,19 @@
 
 $requestUri = $_SERVER['REQUEST_URI'];
 
-if ($requestUri === '/signin') {
-    require_once './handler/signin.php';
 
-} elseif ($requestUri === '/signup') {
-    require_once './handler/signup.php';
+redirectUri($requestUri);
 
-} elseif ($requestUri === '/main') {
-    require_once './handler/main.php';
 
-} elseif ($requestUri === '/error') {
-    require_once './forms/err.phtml';
+function redirectUri(string $rUri)
+{
+    if (preg_match("#/(?<route>[a-z0-9-_]+)#", $rUri, $params)){
+        if (isset($params)) {
+            if (file_exists("./handler/{$params['route']}.php")) {
+                return require_once "./handler/{$params['route']}.php";
+            }
+        }
+    }
+
+    return require_once './views/err.phtml';
 }
-
-
-
