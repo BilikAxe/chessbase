@@ -6,18 +6,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $connection = new PDO("pgsql:host=db;dbname=dbname", 'dbuser', 'dbpwd');
 
-    $errorMessages = validate($_POST, $connection);
+    $errorMessages = validate($_POST);
 
     if (empty($errorMessages)) {
 
-        $userData = $connection->query("SELECT * FROM users");
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $errorMessages = '';
 
-        $_SESSION['id'] = $userData['id'];
+        $result = $connection->prepare("SELECT * FROM users WHERE email = ?");
+        $result->execute([$email]);
+        $userData = $result->fetch();
 
-        header("Location: /main");
-        die;
+        if ($userData) {
+            if (password_verify($password, $userData['password'])) {
+
+                $_SESSION['id'] = $userData['id'];
+
+                header("Location: /main");
+                die;
+            }
+
+            $errorMessages = 'Invalid Login or Password';
+        }
+
+        $errorMessages = 'Invalid Login or Password';
     }
 }
+
 
 function clearData(string $val): string
 {
@@ -27,60 +43,42 @@ function clearData(string $val): string
     return htmlspecialchars($val);
 }
 
-function validate(array $data, PDO $connection): array
+function validate(array $data): string
 {
-    $errorMessages = [];
+    $errorMessages = '';
 
-    $loginError = validateLogin($data, $connection);
+    $loginError = validateLogin($data);
     if (!empty($loginError)) {
-        $errorMessages['email'] = $loginError;
+        $errorMessages = $loginError;
     }
 
-    $passwordError = validatePassword($data, $connection);
+    $passwordError = validatePassword($data);
     if (!empty($passwordError)) {
-        $errorMessages['password'] = $passwordError;
+        $errorMessages = $passwordError;
     }
 
     return $errorMessages;
 }
 
 
-function validateLogin(array $data, PDO $connection): string|null
+function validateLogin(array $data): string|null
 {
     $email = $data['email'] ?? null;
 
-    if (empty($login)) {
-        return 'Invalid Login';
-
-    } else {
-        $result = $connection->prepare("SELECT * FROM users WHERE email = ?");
-        $result->execute([$email]);
-        $userData = $result->fetch();
-
-        if (!$userData) {
-            return 'Wrong Login';
-        }
+    if (empty($email)) {
+        return 'Invalid Login or Password';
     }
 
     return null;
 }
 
 
-function validatePassword(array $data, PDO $connection): string|null
+function validatePassword(array $data): string|null
 {
     $password = $data['password'] ?? null;
 
     if (empty($password)) {
-        return 'Invalid Password';
-
-    } else {
-        $result = $connection->prepare("SELECT * FROM users WHERE email = ?");
-        $result->execute([$data['email']]);
-        $userData = $result->fetch(PDO::FETCH_ASSOC);
-
-        if (!password_verify($password, $userData['password'])) {
-            return 'Wrong Password';
-        }
+        return 'Invalid Login or Password';
     }
 
     return null;

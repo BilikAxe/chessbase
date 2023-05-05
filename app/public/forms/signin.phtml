@@ -2,12 +2,11 @@
     <div class="login">
         <div class="form">
             <p>WELCOME</p>
+            <span><?= $errorMessages ?? ''; ?></span>
             <label>
-                <span><?= $errorMessages['email'] ?? ''; ?></span>
                 <input type="text" name="email" placeholder="email" />
             </label>
             <label>
-                <span><?= $errorMessages['password'] ?? ''; ?></span>
                 <input type="password" name="password" placeholder="password" />
             </label>
             <button type="submit">login</button>
@@ -26,6 +25,7 @@
         color: red;
         font-family: fantasy;
         font-size: 13px;
+        margin: 0 0 15px;
     }
 
     .login {

@@ -10,6 +10,9 @@ if ($requestUri === '/signin') {
 
 } elseif ($requestUri === '/main') {
     require_once './handler/main.php';
+
+} elseif ($requestUri === '/error') {
+    require_once './forms/err.phtml';
 }
 
 
