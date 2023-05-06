@@ -84,5 +84,7 @@ function validatePassword(array $data): string|null
     return null;
 }
 
-
-require_once './views/signin.phtml';
+return [
+    './views/signin.phtml',
+    ['errorMessages']
+];

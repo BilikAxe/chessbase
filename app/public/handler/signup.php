@@ -34,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         header("Location: /signin");
         die;
+
     }
 }
 
@@ -183,5 +184,7 @@ function validatePassword(array $data): string|null
 }
 
 
-
-require_once './views/signup.phtml';
+return [
+    './views/signup.phtml',
+    ['errorMessages']
+];

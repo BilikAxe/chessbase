@@ -3,7 +3,7 @@
 session_start();
 
 if (isset($_SESSION['id'])) {
-    require_once './views/main.phtml';
+    return ['./views/main.phtml', ['errorMessages']];
 } else {
     header("Location: /signin");
 }
