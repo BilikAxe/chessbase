@@ -186,5 +186,6 @@ function validatePassword(array $data): string|null
 
 return [
     './views/signup.phtml',
-    ['errorMessages']
+    ['errorMessages'],
+    false
 ];

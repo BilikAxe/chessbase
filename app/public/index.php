@@ -1,31 +1,28 @@
 <?php
 
-$requestUri = $_SERVER['REQUEST_URI'];
+spl_autoload_register(function ($class) {
 
-$handler = route($requestUri);
+    $appRoot = dirname(__DIR__);
 
-list($view, $param) = require_once $handler;
+    $path = str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
 
-ob_start();
-require_once $view;
-$start = ob_get_clean();
+    $path = preg_replace('#^banana#', $appRoot, $path);
 
-extract($param);
-
-$content = file_get_contents('./views/layout.html');
-
-$content = str_replace('{content}', $start, $content);
-
-echo $content;
-
-
-function route(string $Uri): string
-{
-    if (preg_match("#/(?<route>[a-z0-9-_]+)#", $Uri, $params)){
-        if (file_exists("./handler/{$params['route']}.php")) {
-            return "./handler/{$params['route']}.php";
-        }
+    if (file_exists($path)) {
+        require_once $path;
+        return true;
     }
 
-    return './views/err.html';
-}
+    return false;
+});
+
+use banana\App;
+
+$app = new App();
+
+$app->addRoute('/signup', './handlers/signup.php');
+$app->addRoute('/signin', './handlers/signin.php');
+$app->addRoute('/main', './handlers/main.php');
+$app->addRoute('/error', './handlers/error.php');
+
+$app->run();

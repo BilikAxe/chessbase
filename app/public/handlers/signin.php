@@ -86,5 +86,6 @@ function validatePassword(array $data): string|null
 
 return [
     './views/signin.phtml',
-    ['errorMessages']
+    ['errorMessages'],
+    false
 ];
