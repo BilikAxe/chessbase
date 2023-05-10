@@ -1,28 +1,20 @@
 <?php
 
-spl_autoload_register(function ($class) {
+include '../Autoloader.php';
 
-    $appRoot = dirname(__DIR__);
-
-    $path = str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
-
-    $path = preg_replace('#^banana#', $appRoot, $path);
-
-    if (file_exists($path)) {
-        require_once $path;
-        return true;
-    }
-
-    return false;
-});
+Autoloader::register(dirname(__DIR__));
 
 use banana\App;
 
 $app = new App();
 
-$app->addRoute('/signup', './handlers/signup.php');
-$app->addRoute('/signin', './handlers/signin.php');
-$app->addRoute('/main', './handlers/main.php');
-$app->addRoute('/error', './handlers/error.php');
+$app->get('/signup', [\banana\Controllers\UserController::class, 'signUp']);
+$app->get('/signin', [\banana\Controllers\UserController::class, 'signIn']);
+$app->get('/main', [\banana\Controllers\MainController::class, 'main']);
+$app->get('/error', [\banana\Controllers\ErrorController::class, 'error']);
+
+$app->post('/signup', [\banana\Controllers\UserController::class, 'signUp']);
+$app->post('/signin', [\banana\Controllers\UserController::class, 'signIn']);
+
 
 $app->run();
