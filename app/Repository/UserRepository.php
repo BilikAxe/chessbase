@@ -14,7 +14,7 @@ class UserRepository
         $this->connection = $connection;
     }
 
-    public function save(User $user): User
+    public function save(User $user): void
     {
         $sth = $this->connection->prepare("
                 INSERT INTO users (email, first_name, last_name, surname, phone_number, password) 
@@ -29,8 +29,6 @@ class UserRepository
             'phone_number' => $user->getPhoneNumber(),
             'password' => $user->getPassword()
         ]);
-
-        return $user;
     }
 
 
