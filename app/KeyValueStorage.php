@@ -4,9 +4,7 @@ namespace banana;
 
 class KeyValueStorage
 {
-    private array $storage = [
-        'key' => 'value';
-    ];
+    private array $storage = [];
 
 
     public function set(string $key, mixed $value): void

@@ -7,39 +7,25 @@ Autoloader::register(dirname(__DIR__));
 use banana\App;
 use banana\Container;
 use banana\Controllers\UserController;
-use banana\KeyValueStorage;
 use banana\Repository\UserRepository;
 
-$storage = new KeyValueStorage();
-
-//$storage->set('key1', 'abcd');
-//echo $storage->get('key1');die;
-
-//$storage->set('key1', function (){
-//    echo 'Hello word';
-//});
-//$storage->get('key1')();die;
-
-//$value = $storage->get('key1');
-//$value();die;
 
 $container = new Container();
 
 $container->set(UserController::class, function (){
-
+    $connection = new PDO("pgsql:host=db;dbname=dbname", 'dbuser', 'dbpwd');
+    $userRepository = new UserRepository($connection);
+    return new UserController($userRepository);
 });
+
 
 $container->set(UserRepository::class, function (){
-
+    $connection = new PDO("pgsql:host=db;dbname=dbname", 'dbuser', 'dbpwd');
+    return new UserRepository($connection);
 });
 
 
-
-
-
-
-
-$app = new App();
+$app = new App($container);
 
 $app->get('/signup', [\banana\Controllers\UserController::class, 'signUp']);
 $app->get('/signin', [\banana\Controllers\UserController::class, 'signIn']);

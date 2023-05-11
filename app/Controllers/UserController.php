@@ -20,8 +20,6 @@ class UserController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $connection = $this->userRepository;
-
             $errorMessages = $this->validate($_POST);
 
             if (empty($errorMessages)) {
@@ -34,7 +32,7 @@ class UserController
 
                 $password = password_hash($password, PASSWORD_DEFAULT);
 
-                $connection->create($email, $firstName, $lastName, $surname, $phoneNumber, $password);
+                $this->userRepository->create($email, $firstName, $lastName, $surname, $phoneNumber, $password);
 
                 header("Location: /signin");
                 die;
@@ -103,7 +101,7 @@ class UserController
         if (empty($email)) {
             return 'Invalid Email';
         } else {
-            $exists = $this->userRepository->getEmail($data);
+            $exists = $this->userRepository->getEmail($email);
 
             if ($exists) {
                 return "This email already exists";
@@ -202,8 +200,6 @@ class UserController
         $errorMessages = '';
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            $connection = $this->userRepository;
 
             $errorMessages = $this->validateLoginAndPass($_POST);
 

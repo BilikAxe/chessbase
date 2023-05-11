@@ -4,15 +4,20 @@ namespace banana;
 
 class Container
 {
-    private array $obj = [];
+    private array $services = [];
 
     public function set(string $name, callable $callback): void
     {
-        $this->obj[$name] = $callback;
+        $this->services[$name] = $callback;
     }
 
-    public function get(string $name): callable
+    public function get(string $name): object
     {
-        return $this->obj[$name];
+        if (!isset($this->services[$name]))
+        {
+            return new $name();
+        }
+
+        return $this->services[$name]();
     }
 }

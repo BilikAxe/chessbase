@@ -33,10 +33,10 @@ class UserRepository
 
 
 
-    public function getEmail(array $data): bool
+    public function getEmail(string $email): array
     {
-        $result = $this->connection->prepare("SELECT email FROM users WHERE email = ?");
-        $result->execute($data['email']);
+        $result = $this->connection->prepare("SELECT * FROM users WHERE email = ?");
+        $result->execute([$email]);
 
         return $result->fetch();
     }

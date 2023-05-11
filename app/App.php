@@ -7,6 +7,13 @@ use banana\Controllers\ErrorController;
 
 class App
 {
+    private Container $container;
+
+    public function __construct(Container $container)
+    {
+        $this->container = $container;
+    }
+
     private array $routes = [
         'GET' => [],
         'POST' => []
@@ -21,7 +28,7 @@ class App
             list($obj, $method) = $handler;
 
             if (!is_object($obj)) {
-                $obj = new $obj();
+                $obj = $this->container->get($obj);
             }
 
             $response = $obj->$method();
