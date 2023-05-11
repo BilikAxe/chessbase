@@ -8,22 +8,14 @@ class UserRepository
 {
     private PDO $connection;
 
-    public function __construct()
+    public function __construct(PDO $connection)
     {
-        $this->connection = new PDO("pgsql:host=db;dbname=dbname", 'dbuser', 'dbpwd');
+        $this->connection = $connection;
     }
 
-    public function create($data): void
+    public function create(string $email, string $firstName, string $lastName,
+                           string $surname, string $phoneNumber, string $password): void
     {
-        $email = $this->clearData($data['email']);
-        $firstName = $this->clearData($data['firstName']);
-        $lastName = $this->clearData($data['lastName']);
-        $surname = $this->clearData($data['surname']);
-        $phoneNumber = $this->clearData($data['phoneNumber']);
-        $password = $data['password'];
-
-        $password = password_hash($password, PASSWORD_DEFAULT);
-
         $sth = $this->connection->prepare("
                 INSERT INTO users (email, first_name, last_name, surname, phone_number, password) 
                 VALUES (:email, :first_name, :last_name, :surname, :phone_number, :password)
@@ -39,13 +31,7 @@ class UserRepository
         ]);
     }
 
-    private function clearData(string $val): string
-    {
-        $val = trim($val);
-        $val = stripslashes($val);
-        $val = strip_tags($val);
-        return htmlspecialchars($val);
-    }
+
 
     public function getEmail(array $data): bool
     {

@@ -25,7 +25,16 @@ class UserController
             $errorMessages = $this->validate($_POST);
 
             if (empty($errorMessages)) {
-                $connection->create($_POST);
+                $email = $this->clearData($_POST['email']);
+                $firstName = $this->clearData($_POST['firstName']);
+                $lastName = $this->clearData($_POST['lastName']);
+                $surname = $this->clearData($_POST['surname']);
+                $phoneNumber = $this->clearData($_POST['phoneNumber']);
+                $password = $_POST['password'];
+
+                $password = password_hash($password, PASSWORD_DEFAULT);
+
+                $connection->create($email, $firstName, $lastName, $surname, $phoneNumber, $password);
 
                 header("Location: /signin");
                 die;
@@ -38,6 +47,15 @@ class UserController
             ['errorMessages' => $errorMessages],
             false
         ];
+    }
+
+
+    private function clearData(string $val): string
+    {
+        $val = trim($val);
+        $val = stripslashes($val);
+        $val = strip_tags($val);
+        return htmlspecialchars($val);
     }
 
 
