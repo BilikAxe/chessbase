@@ -4,6 +4,7 @@ namespace banana;
 
 use banana\Controllers\ErrorController;
 
+
 class App
 {
     private array $routes = [
@@ -21,9 +22,6 @@ class App
 
             if (!is_object($obj)) {
                 $obj = new $obj();
-                if ($obj instanceof PdoInterface) {
-                    $obj->setConnection(new \PDO("pgsql:host=db;dbname=dbname", 'dbuser', 'dbpwd'));
-                }
             }
 
             $response = $obj->$method();

@@ -6,6 +6,11 @@ Autoloader::register(dirname(__DIR__));
 
 use banana\App;
 
+
+
+
+
+
 $app = new App();
 
 $app->get('/signup', [\banana\Controllers\UserController::class, 'signUp']);

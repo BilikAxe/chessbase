@@ -2,17 +2,15 @@
 
 namespace banana\Controllers;
 
-use banana\PdoInterface;
-use PDO;
+use banana\Repository\UserRepository;
 
-class UserController implements PdoInterface
+class UserController
 {
-    private PDO $connection;
+    private UserRepository $userRepository;
 
-
-    public function setConnection(PDO $connection): void
+    public function __construct(UserRepository $userRepository)
     {
-        $this->connection = $connection;
+        $this->userRepository = $userRepository;
     }
 
 
@@ -22,33 +20,12 @@ class UserController implements PdoInterface
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $connection = $this->connection;
+            $connection = $this->userRepository;
 
-            $errorMessages = $this->validate($_POST, $connection);
+            $errorMessages = $this->validate($_POST);
 
             if (empty($errorMessages)) {
-                $email = $this->clearData($_POST['email']);
-                $firstName = $this->clearData($_POST['firstName']);
-                $lastName = $this->clearData($_POST['lastName']);
-                $surname = $this->clearData($_POST['surname']);
-                $phoneNumber = $this->clearData($_POST['phoneNumber']);
-                $password = $_POST['password'];
-
-                $password = password_hash($password, PASSWORD_DEFAULT);
-
-                $sth = $connection->prepare("
-                INSERT INTO users (email, first_name, last_name, surname, phone_number, password) 
-                VALUES (:email, :first_name, :last_name, :surname, :phone_number, :password)
-                ");
-
-                $sth->execute([
-                    'email' => $email,
-                    'first_name' => $firstName,
-                    'last_name' => $lastName,
-                    'surname' => $surname,
-                    'phone_number' => $phoneNumber,
-                    'password' => $password
-                ]);
+                $connection->create($_POST);
 
                 header("Location: /signin");
                 die;
@@ -64,20 +41,11 @@ class UserController implements PdoInterface
     }
 
 
-    private function clearData(string $val): string
-    {
-        $val = trim($val);
-        $val = stripslashes($val);
-        $val = strip_tags($val);
-        return htmlspecialchars($val);
-    }
-
-
-    private function validate(array $data, PDO $connection): array
+    private function validate(array $data): array
     {
         $errorMessages = [];
 
-        $emailError = $this->validateEmail($data, $connection);
+        $emailError = $this->validateEmail($data);
         if (!empty($emailError)) {
             $errorMessages['email'] = $emailError;
         }
@@ -111,15 +79,13 @@ class UserController implements PdoInterface
     }
 
 
-    private function validateEmail(array $data, PDO $connection): string|null
+    private function validateEmail(array $data): string|null
     {
         $email = $data['email'] ?? null;
         if (empty($email)) {
             return 'Invalid Email';
         } else {
-            $result = $connection->prepare("SELECT email FROM users WHERE email = ?");
-            $result->execute([$email]);
-            $exists = $result->fetch();
+            $exists = $this->userRepository->getEmail($data);
 
             if ($exists) {
                 return "This email already exists";
@@ -219,18 +185,16 @@ class UserController implements PdoInterface
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $connection = $this->connection;
+            $connection = $this->userRepository;
 
             $errorMessages = $this->validateLoginAndPass($_POST);
 
             if (empty($errorMessages)) {
 
-                $email = $this->clearData($_POST['email']);
+                $email = $_POST['email'];
                 $password = $_POST['password'];
 
-                $result = $connection->prepare("SELECT * FROM users WHERE email = ?");
-                $result->execute([$email]);
-                $userData = $result->fetch();
+                $userData = $this->userRepository->getEmail($email);
 
                 if ($userData && password_verify($password, $userData['password'])) {
 
