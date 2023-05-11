@@ -2,6 +2,7 @@
 
 namespace banana\Repository;
 
+use banana\Entity\User;
 use PDO;
 
 class UserRepository
@@ -13,8 +14,7 @@ class UserRepository
         $this->connection = $connection;
     }
 
-    public function create(string $email, string $firstName, string $lastName,
-                           string $surname, string $phoneNumber, string $password): void
+    public function save(User $user): User
     {
         $sth = $this->connection->prepare("
                 INSERT INTO users (email, first_name, last_name, surname, phone_number, password) 
@@ -22,18 +22,20 @@ class UserRepository
                 ");
 
         $sth->execute([
-            'email' => $email,
-            'first_name' => $firstName,
-            'last_name' => $lastName,
-            'surname' => $surname,
-            'phone_number' => $phoneNumber,
-            'password' => $password
+            'email' => $user->getEmail(),
+            'first_name' => $user->getFirstName(),
+            'last_name' => $user->getLastName(),
+            'surname' => $user->getSurname(),
+            'phone_number' => $user->getPhoneNumber(),
+            'password' => $user->getPassword()
         ]);
+
+        return $user;
     }
 
 
 
-    public function getEmail(string $email): array
+    public function getEmail(string $email): bool|array
     {
         $result = $this->connection->prepare("SELECT * FROM users WHERE email = ?");
         $result->execute([$email]);

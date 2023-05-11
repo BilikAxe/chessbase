@@ -12,15 +12,16 @@ use banana\Repository\UserRepository;
 
 $container = new Container();
 
-$container->set(UserController::class, function (){
-    $connection = new PDO("pgsql:host=db;dbname=dbname", 'dbuser', 'dbpwd');
-    $userRepository = new UserRepository($connection);
+$container->set(UserController::class, function (Container $container){
+    $userRepository = $container->get(UserRepository::class);
+
     return new UserController($userRepository);
 });
 
 
 $container->set(UserRepository::class, function (){
     $connection = new PDO("pgsql:host=db;dbname=dbname", 'dbuser', 'dbpwd');
+
     return new UserRepository($connection);
 });
 

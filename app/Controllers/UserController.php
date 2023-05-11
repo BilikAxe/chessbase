@@ -2,6 +2,7 @@
 
 namespace banana\Controllers;
 
+use banana\Entity\User;
 use banana\Repository\UserRepository;
 
 class UserController
@@ -32,12 +33,13 @@ class UserController
 
                 $password = password_hash($password, PASSWORD_DEFAULT);
 
-                $this->userRepository->create($email, $firstName, $lastName, $surname, $phoneNumber, $password);
+                $user = new User($email, $firstName, $lastName, $surname, $phoneNumber, $password);
+
+                $this->userRepository->save($user);
 
                 header("Location: /signin");
                 die;
             }
-
         }
 
         return [

@@ -18,6 +18,6 @@ class Container
             return new $name();
         }
 
-        return $this->services[$name]();
+        return $this->services[$name]($this);
     }
 }
