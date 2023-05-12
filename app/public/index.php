@@ -26,6 +26,7 @@ $container->set(UserRepository::class, function (){
 });
 
 
+
 $app = new App($container);
 
 $app->get('/signup', [\banana\Controllers\UserController::class, 'signUp']);
@@ -35,6 +36,5 @@ $app->get('/error', [\banana\Controllers\ErrorController::class, 'error']);
 
 $app->post('/signup', [\banana\Controllers\UserController::class, 'signUp']);
 $app->post('/signin', [\banana\Controllers\UserController::class, 'signIn']);
-
 
 $app->run();

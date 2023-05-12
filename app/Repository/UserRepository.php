@@ -17,8 +17,20 @@ class UserRepository
     public function save(User $user): void
     {
         $sth = $this->connection->prepare("
-                INSERT INTO users (email, first_name, last_name, surname, phone_number, password) 
-                VALUES (:email, :first_name, :last_name, :surname, :phone_number, :password)
+                INSERT INTO users (
+                        email, 
+                        first_name, 
+                        last_name, 
+                        surname, 
+                        phone_number, 
+                        password
+                ) VALUES (
+                        :email, 
+                        :first_name, 
+                        :last_name, 
+                        :surname, 
+                        :phone_number, 
+                        :password)
                 ");
 
         $sth->execute([
@@ -33,11 +45,24 @@ class UserRepository
 
 
 
-    public function getEmail(string $email): bool|array
+    public function getEmail(string $email): object
     {
         $result = $this->connection->prepare("SELECT * FROM users WHERE email = ?");
         $result->execute([$email]);
 
-        return $result->fetch();
+        $data = $result->fetch();
+
+        $user =  new User(
+            $data['email'],
+            $data['first_name'],
+            $data['last_name'],
+            $data['surname'],
+            $data['phone_number'],
+            $data['password']
+        );
+
+        $user->setId($data['id']);
+
+        return $user;
     }
 }

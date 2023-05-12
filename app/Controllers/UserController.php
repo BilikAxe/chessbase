@@ -212,9 +212,9 @@ class UserController
 
                 $userData = $this->userRepository->getEmail($email);
 
-                if ($userData && password_verify($password, $userData['password'])) {
+                if ($userData && password_verify($password, $userData->getPassword())) {
 
-                    $_SESSION['id'] = $userData['id'];
+                    $_SESSION['id'] = $userData->getId();
 
                     header("Location: /main");
                     die;

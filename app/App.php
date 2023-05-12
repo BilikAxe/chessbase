@@ -19,6 +19,7 @@ class App
         'POST' => []
     ];
 
+
     public function run(): void
     {
         $handler = $this->route();
@@ -28,10 +29,16 @@ class App
             list($obj, $method) = $handler;
 
             if (!is_object($obj)) {
-                $obj = $this->container->get($obj);
+                try {
+                    $obj = $this->container->get($obj);
+
+                } catch (Exception\ExceptionContainer $e) {
+                    echo $e->getMessage();
+                }
             }
 
             $response = $obj->$method();
+
         } else {
             $response = $handler();
         }
