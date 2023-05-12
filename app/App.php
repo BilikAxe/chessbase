@@ -22,44 +22,49 @@ class App
 
     public function run(): void
     {
-        $handler = $this->route();
+        try {
+            $handler = $this->route();
 
-        if (is_array($handler)) {
+            if (is_array($handler)) {
 
-            list($obj, $method) = $handler;
+                list($obj, $method) = $handler;
 
-            if (!is_object($obj)) {
-                try {
+                if (!is_object($obj)) {
                     $obj = $this->container->get($obj);
-
-                } catch (Exception\ExceptionContainer $e) {
-                    echo $e->getMessage();
                 }
+
+                $response = $obj->$method();
+
+            } else {
+                $response = $handler();
             }
 
-            $response = $obj->$method();
+            list($view, $param, $isLayout) = $response;
 
-        } else {
-            $response = $handler();
-        }
+            extract($param);
 
-        list($view, $param, $isLayout) = $response;
+            ob_start();
 
-        extract($param);
+            require_once $view;
 
-        ob_start();
+            if ($isLayout) {
 
-        require_once $view;
+                $start = ob_get_clean();
 
-        if ($isLayout) {
+                $content = file_get_contents('./views/layout.html');
 
-            $start = ob_get_clean();
+                $result = str_replace('{content}', $start, $content);
 
-            $content = file_get_contents('./views/layout.html');
+                echo $result;
+            }
+        } catch (\Throwable $exception) {
+            $errorFile = fopen('../Log/error.php', "w+");
+            fputs($errorFile, "Message: {$exception->getMessage()}\n");
+            fputs($errorFile, "File: {$exception->getFile()}\n");
+            fputs($errorFile, "Line: {$exception->getLine()}\n");
+            fclose($errorFile);
 
-            $result = str_replace('{content}', $start, $content);
-
-            echo $result;
+            require_once './views/error.html';
         }
     }
 

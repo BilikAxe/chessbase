@@ -8,13 +8,13 @@ class Container
 {
     private array $services = [];
 
-    public function set(string $name, callable $callback): void
+    public function set(string $name, mixed $callback): void
     {
         $this->services[$name] = $callback;
     }
 
 
-    public function get(string $name): object
+    public function get(string $name): mixed
     {
         if (!isset($this->services[$name]))
         {
