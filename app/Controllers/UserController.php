@@ -43,7 +43,7 @@ class UserController
         }
 
         return [
-            './views/signup.phtml',
+            '../Views/signup.phtml',
             ['errorMessages' => $errorMessages],
             false
         ];
@@ -225,7 +225,7 @@ class UserController
         }
 
         return [
-            './views/signin.phtml',
+            '../Views/signin.phtml',
             ['errorMessages' => $errorMessages],
             false
         ];

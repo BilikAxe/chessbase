@@ -8,12 +8,20 @@ class Container
 {
     private array $services = [];
 
-    public function set(string $name, mixed $callback): void
+    public function __construct(array $data)
     {
-        $this->services[$name] = $callback;
+        $this->services = $data;
+    }
+
+    public function set(string $name, mixed $value): void
+    {
+        $this->services[$name] = $value;
     }
 
 
+    /**
+     * @throws ExceptionContainer
+     */
     public function get(string $name): mixed
     {
         if (!isset($this->services[$name]))
@@ -22,9 +30,13 @@ class Container
                 return new $name();
             }
 
-            throw new ExceptionContainer("Sorry error with container, invalid class name {$name}");
+            throw new ExceptionContainer("Class named '{$name}' does not exist.");
         }
 
-        return $this->services[$name]($this);
+        if (is_callable($this->services[$name])) {
+            return $this->services[$name]($this);
+        }
+
+        return $this->services[$name];
     }
 }

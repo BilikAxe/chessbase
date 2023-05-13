@@ -7,7 +7,7 @@ class ErrorController
     public function error(): array
     {
         return [
-            './views/error.html',
+            '../Views/error404.html',
             [],
             false
         ];

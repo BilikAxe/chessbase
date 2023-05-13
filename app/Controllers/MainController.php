@@ -12,13 +12,13 @@ class MainController
 
         if (isset($_SESSION['id'])) {
             return [
-                './views/main.phtml',
+                '../Views/main.phtml',
                 ['errorMessages'],
                 true];
         }
 
         return [
-            './views/signin.phtml',
+            '../Views/signin.phtml',
             ['errorMessages'],
             false
         ];

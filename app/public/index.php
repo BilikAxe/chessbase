@@ -6,26 +6,13 @@ Autoloader::register(dirname(__DIR__));
 
 use banana\App;
 use banana\Container;
-use banana\Controllers\UserController;
-use banana\Repository\UserRepository;
 
+$dependencies = require_once '../Configs/dependencies.php';
+$configs = require_once '../Configs/settings.php';
 
-$container = new Container();
+$data = array_merge($configs, $dependencies);
 
-$container->set(UserController::class, function (Container $container){
-    $userRepository = $container->get(UserRepository::class);
-
-    return new UserController($userRepository);
-});
-
-
-$container->set(UserRepository::class, function (){
-    $connection = new PDO("pgsql:host=db;dbname=dbname", 'dbuser', 'dbpwd');
-
-    return new UserRepository($connection);
-});
-
-
+$container = new Container($data);
 
 $app = new App($container);
 

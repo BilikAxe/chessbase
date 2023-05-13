@@ -4,20 +4,20 @@ namespace banana;
 
 use banana\Controllers\ErrorController;
 
-
 class App
 {
     private Container $container;
-
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
-    }
 
     private array $routes = [
         'GET' => [],
         'POST' => []
     ];
+
+
+    public function __construct(Container $container)
+    {
+        $this->container = $container;
+    }
 
 
     public function run(): void
@@ -51,20 +51,25 @@ class App
 
                 $start = ob_get_clean();
 
-                $content = file_get_contents('./views/layout.html');
+                $content = file_get_contents('../Views/layout.html');
 
                 $result = str_replace('{content}', $start, $content);
 
                 echo $result;
             }
         } catch (\Throwable $exception) {
-            $errorFile = fopen('../Log/error.php', "w+");
-            fputs($errorFile, "Message: {$exception->getMessage()}\n");
-            fputs($errorFile, "File: {$exception->getFile()}\n");
-            fputs($errorFile, "Line: {$exception->getLine()}\n");
-            fclose($errorFile);
 
-            require_once './views/error.html';
+            $logger = $this->container->get(LoggerInterface::class);
+
+            $data = [
+                'Message' => $exception->getMessage(),
+                'File' => $exception->getFile(),
+                'Line' => $exception->getLine(),
+            ];
+
+            $logger->error('An error occurred while processing the request', $data);
+
+            require_once '../Views/error500.html';
         }
     }
 
