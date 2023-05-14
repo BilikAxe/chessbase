@@ -18,7 +18,7 @@ $app = new App($container);
 
 $app->get('/signup', [\banana\Controllers\UserController::class, 'signUp']);
 $app->get('/signin', [\banana\Controllers\UserController::class, 'signIn']);
-$app->get('/main', [\banana\Controllers\MainController::class, 'main']);
+$app->get('/catalog', [\banana\Controllers\CatalogController::class, 'openCatalog']);
 $app->get('/error', [\banana\Controllers\ErrorController::class, 'error']);
 
 $app->post('/signup', [\banana\Controllers\UserController::class, 'signUp']);

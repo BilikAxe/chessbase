@@ -103,7 +103,7 @@ class UserController
         if (empty($email)) {
             return 'Invalid Email';
         } else {
-            $exists = $this->userRepository->getEmail($email);
+            $exists = $this->userRepository->getByEmail($email);
 
             if ($exists) {
                 return "This email already exists";
@@ -210,13 +210,13 @@ class UserController
                 $email = $_POST['email'];
                 $password = $_POST['password'];
 
-                $userData = $this->userRepository->getEmail($email);
+                $userData = $this->userRepository->getByEmail($email);
 
                 if ($userData && password_verify($password, $userData->getPassword())) {
 
                     $_SESSION['id'] = $userData->getId();
 
-                    header("Location: /main");
+                    header("Location: /catalog");
                     die;
                 }
 

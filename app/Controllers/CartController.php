@@ -2,9 +2,9 @@
 
 namespace banana\Controllers;
 
-class MainController
+class CartController
 {
-    public function main(): array
+    public function openCart(): array
     {
         if(session_status() === PHP_SESSION_NONE){
             session_start();
@@ -12,14 +12,14 @@ class MainController
 
         if (isset($_SESSION['id'])) {
             return [
-                '../Views/main.phtml',
-                ['errorMessages'],
+                '../Views/catalog.phtml',
+                [],
                 true];
         }
 
         return [
             '../Views/signin.phtml',
-            ['errorMessages'],
+            [],
             false
         ];
     }

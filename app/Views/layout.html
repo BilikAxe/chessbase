@@ -1,9 +1,155 @@
-<header>
-    HEADER
-</header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Products</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+</head>
 <body>
-{content}
+    <header class="header">
+        <div class="container">
+            <div class="header__logo">
+                <h1 class="header__logo__name">Logo</h1>
+            </div>
+            <nav class="header__nav">
+                <ul class="header__menu">
+                    <li class="header__item"><a href="#" class="header__link">General</a></li>
+                    <li class="header__item"><a href="#" class="header__link">about</a></li>
+                    <li class="header__item"><a href="#" class="header__link">contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="ground">
+        <h1>  {content} </h1>
+    </div>
+
+    <footer>
+        <div class="footer_container">
+            <div class="logo"> <p>LOGO</p></div>
+            <div class="social_media">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <p>LOGO © 2023 Made with love</p>
+        </div>
+    </footer>
 </body>
-<footer>
-    FOOTER
-</footer>
+</html>
+<style>
+
+    li {
+        list-style: none;
+    }
+
+    .container {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background: #395591;
+    }
+    .header {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 100px;
+        box-shadow: 0 35px 60px rgba(0, 0, 0, 0.25);
+    }
+
+    .header__logo {
+        text-transform: uppercase;
+    }
+
+    .header__menu {
+        display: flex;
+        column-gap: 54px;
+    }
+
+    .header__link {
+        font-size: 20px;
+        text-transform: uppercase;
+        color: red;
+        text-decoration: none;
+        position: relative;
+    }
+
+    .header__link::after {
+        content: "";
+        width: 0;
+        height: 2px;
+        background: blue;
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        transition: 0.3s ease;
+    }
+
+    .header__link:hover::after {
+        width: 100%;
+        transition: 0.3s ease;
+    }
+
+    body{
+        margin: 0;
+        padding: 0;
+        font-family: "Open Sans",sans-serif;
+        background-color: #e0e0e0;
+    }
+
+    .ground{
+        min-height: 50vh;
+        font-size: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    footer{
+        background: #ff0005;
+        padding: 20px 0;
+    }
+
+    .footer_container{
+        max-width: 1300px;
+        margin: auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap-reverse;
+        color: white;
+    }
+
+    .logo{
+        width: 180px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .social_media{
+        margin: 20px 150px;
+    }
+
+    .social_media a{
+        color: #395591;
+        font-size: 24px;
+        text-decoration: none;
+        transition: .6s;
+    }
+
+    .social_media a:hover{
+        color: gold;
+    }
+    h1{
+        font-size: 40px;
+        color: #fff;
+        font-weight: bold;
+    }
+</style>

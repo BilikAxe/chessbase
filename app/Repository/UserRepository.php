@@ -45,24 +45,28 @@ class UserRepository
 
 
 
-    public function getEmail(string $email): object
+    public function getByEmail(string $email): User|null
     {
         $result = $this->connection->prepare("SELECT * FROM users WHERE email = ?");
         $result->execute([$email]);
 
         $data = $result->fetch();
 
-        $user =  new User(
-            $data['email'],
-            $data['first_name'],
-            $data['last_name'],
-            $data['surname'],
-            $data['phone_number'],
-            $data['password']
-        );
+        if ($data) {
+            $user = new User(
+                $data['email'],
+                $data['first_name'],
+                $data['last_name'],
+                $data['surname'],
+                $data['phone_number'],
+                $data['password']
+            );
 
-        $user->setId($data['id']);
+            $user->setId($data['id']);
 
-        return $user;
+            return $user;
+        }
+
+        return null;
     }
 }
