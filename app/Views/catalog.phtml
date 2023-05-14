@@ -1,47 +1,31 @@
-<div class="container_product">
-    <div class="products">
-        <div class="product">
-            <div class="image">
-                <img src="https://prostoreshop.ru/wp-content/uploads/2022/05/smartfon-apple-iphone-11-64gb-global-chernyj-7.jpg" alt="">
-            </div>
-            <div class="namePrice">
-                <h3>Iphone</h3>
-                <span>$ 1000</span>
-            </div>
-            <p>L</p>
-            <div class="stars">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-regular fa-star"></i>
-            </div>
-            <div class="bay">
-                <button> bay now </button>
-            </div>
-        </div>
-        <div class="product">
-            <div class="image">
-                <img src="https://prostoreshop.ru/wp-content/uploads/2022/07/smartfon-samsung-galaxy-a13-3-32-gb-chernyj.jpg" alt="">
-            </div>
-            <div class="namePrice">
-                <h3>Sumsung</h3>
-                <span>$ 800</span>
-            </div>
-            <p>L</p>
-            <div class="stars">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-regular fa-star"></i>
-            </div>
-            <div class="bay">
-                <button> bay now </button>
-            </div>
+<form class="products" action="" method="POST">
+    <div class="container_product">
+        <div class="products">
+            <?php foreach ($products as $elem): ?>
+                <div class="product">
+                    <div class="image">
+                        <img src="<?= $elem->getImg(); ?>" alt="">
+                    </div>
+                    <div class="namePrice">
+                        <h3><?= $elem->getName(); ?></h3>
+                        <span>$ <?= $elem->getPrice(); ?> </span>
+                    </div>
+                    <p>L</p>
+                    <div class="stars">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                    </div>
+                    <div class="bay">
+                        <button> bay now </button>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
     </div>
-</div>
+</form>
 <style>
     :root{
         --bodyBack: #ffeaed;

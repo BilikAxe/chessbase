@@ -17,10 +17,6 @@ class CartController
                 true];
         }
 
-        return [
-            '../Views/signin.phtml',
-            [],
-            false
-        ];
+        return [];
     }
 }

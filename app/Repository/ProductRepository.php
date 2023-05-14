@@ -33,4 +33,27 @@ class ProductRepository
 
         return null;
     }
+
+    public function getAllProducts(): array
+    {
+        $products = [];
+
+        $result = $this->connection->query("SELECT * FROM products");
+
+        $data = $result->fetchAll();
+
+        foreach ($data as $elem) {
+            $product = new Product(
+                $elem['name'],
+                $elem['price']
+            );
+
+            $product->setId($elem['id']);
+            $product->setImg($elem['img']);
+
+            $products[] = $product;
+        }
+
+        return $products;
+    }
 }

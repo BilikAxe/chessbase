@@ -7,7 +7,7 @@ class Cart
     private int $id;
     private int $userId;
     private array $products = [];
-    private int $grandTotal = 0;
+    private int $grandTotal;
 
 
     public function __construct(int $userId)
@@ -48,18 +48,7 @@ class Cart
 
     public function getGrandTotal(): int
     {
+
         return $this->grandTotal;
-    }
-
-
-    public function addGrandTotal(Product $product): void
-    {
-        $this->grandTotal += $product['price'];
-    }
-
-
-    public function diminishGrandTotal(Product $product): void
-    {
-        $this->grandTotal -= $product['price'];
     }
 }

@@ -3,6 +3,7 @@
 namespace banana\Controllers;
 
 use banana\Repository\ProductRepository;
+use http\Header;
 
 class CatalogController
 {
@@ -19,19 +20,17 @@ class CatalogController
             session_start();
         }
 
-        $products = [];
-
         if (isset($_SESSION['id'])) {
+
+            $products = $this->productRepository->getAllProducts();
+
             return [
                 '../Views/catalog.phtml',
                 ['products' => $products],
                 true];
         }
 
-        return [
-            '../Views/signin.phtml',
-            [],
-            false
-        ];
+        header("Location: /signin");
+        return [];
     }
 }

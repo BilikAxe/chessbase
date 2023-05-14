@@ -7,6 +7,7 @@ class Product
     private int $id;
     private string $name;
     private int $price;
+    private string $img = '';
 
 
     public function __construct(string $name, int $price)
@@ -37,5 +38,17 @@ class Product
     public function getPrice(): int
     {
         return $this->price;
+    }
+
+
+    public function getImg(): string
+    {
+        return $this->img;
+    }
+
+
+    public function setImg(string $img): void
+    {
+        $this->img = $img;
     }
 }

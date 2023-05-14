@@ -40,3 +40,42 @@ An error occurred while processing the request:
 An error occurred while processing the request: 
 {"Message":"Cannot use object of type PDOStatement as array","File":"\/var\/www\/html\/app\/Repository\/ProductRepository.php","Line":43}
 
+An error occurred while processing the request: 
+{"Message":"extract(): Argument #1 ($array) must be of type array, string given","File":"\/var\/www\/html\/app\/App.php","Line":44}
+
+An error occurred while processing the request: 
+{"Message":"extract(): Argument #1 ($array) must be of type array, string given","File":"\/var\/www\/html\/app\/App.php","Line":44}
+
+An error occurred while processing the request: 
+{"Message":"extract(): Argument #1 ($array) must be of type array, null given","File":"\/var\/www\/html\/app\/App.php","Line":44}
+
+An error occurred while processing the request: 
+{"Message":"Cannot use object of type stdClass as array","File":"\/var\/www\/html\/app\/Views\/catalog.phtml","Line":9}
+
+An error occurred while processing the request: 
+{"Message":"syntax error, unexpected token \")\"","File":"\/var\/www\/html\/app\/Repository\/ProductRepository.php","Line":46}
+
+An error occurred while processing the request: 
+{"Message":"Cannot access offset of type string on string","File":"\/var\/www\/html\/app\/Views\/catalog.phtml","Line":9}
+
+An error occurred while processing the request: 
+{"Message":"Call to a member function getName() on int","File":"\/var\/www\/html\/app\/Views\/catalog.phtml","Line":9}
+
+An error occurred while processing the request: 
+{"Message":"Typed property banana\\Entity\\Product::$img must not be accessed before initialization","File":"\/var\/www\/html\/app\/Entity\/Product.php","Line":46}
+
+An error occurred while processing the request: 
+{"Message":"Typed property banana\\Entity\\Product::$img must not be accessed before initialization","File":"\/var\/www\/html\/app\/Entity\/Product.php","Line":46}
+
+An error occurred while processing the request: 
+{"Message":"Typed property banana\\Entity\\Product::$img must not be accessed before initialization","File":"\/var\/www\/html\/app\/Entity\/Product.php","Line":46}
+
+An error occurred while processing the request: 
+{"Message":"banana\\Entity\\Product::setImg(): Argument #1 ($img) must be of type string, null given, called in \/var\/www\/html\/app\/Repository\/ProductRepository.php on line 52","File":"\/var\/www\/html\/app\/Entity\/Product.php","Line":50}
+
+An error occurred while processing the request: 
+{"Message":"banana\\Entity\\Product::setImg(): Argument #1 ($img) must be of type string, null given, called in \/var\/www\/html\/app\/Repository\/ProductRepository.php on line 52","File":"\/var\/www\/html\/app\/Entity\/Product.php","Line":50}
+
+An error occurred while processing the request: 
+{"Message":"Call to undefined method banana\\Controllers\\CartController::openCatalog()","File":"\/var\/www\/html\/app\/App.php","Line":36}
+
