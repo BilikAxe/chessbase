@@ -27,19 +27,19 @@
         <h1>  {content} </h1>
     </div>
 
-    <footer>
-        <div class="footer_container">
-            <div class="logo"> <p>LOGO</p></div>
-            <div class="social_media">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-            <p>LOGO © 2023 Made with love</p>
-        </div>
-    </footer>
+<!--    <footer>-->
+<!--        <div class="footer_container">-->
+<!--            <div class="logo"> <p>LOGO</p></div>-->
+<!--            <div class="social_media">-->
+<!--                <a href="#"><i class="fab fa-facebook-f"></i></a>-->
+<!--                <a href="#"><i class="fab fa-twitter"></i></a>-->
+<!--                <a href="#"><i class="fab fa-instagram"></i></a>-->
+<!--                <a href="#"><i class="fab fa-youtube"></i></a>-->
+<!--                <a href="#"><i class="fab fa-linkedin-in"></i></a>-->
+<!--            </div>-->
+<!--            <p>LOGO © 2023 Made with love</p>-->
+<!--        </div>-->
+<!--    </footer>-->
 </body>
 </html>
 <style>
@@ -104,26 +104,27 @@
     }
 
     .ground{
-        min-height: 50vh;
         font-size: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
+        box-sizing: border-box;
+        min-height: 100%;
+        padding-bottom: 90px;
     }
 
     footer{
+        flex: 0 0 auto;
         background: #ff0005;
-        padding: 20px 0;
+        padding: 20px;
     }
 
     .footer_container{
         max-width: 1300px;
         margin: auto;
-        padding: 0 20px;
+        padding: 20px 20px;
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap-reverse;
         color: white;
     }
 

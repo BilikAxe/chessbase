@@ -79,3 +79,42 @@ An error occurred while processing the request:
 An error occurred while processing the request: 
 {"Message":"Call to undefined method banana\\Controllers\\CartController::openCatalog()","File":"\/var\/www\/html\/app\/App.php","Line":36}
 
+An error occurred while processing the request: 
+{"Message":"Call to a member function getImg() on null","File":"\/var\/www\/html\/app\/Views\/catalog.phtml","Line":7}
+
+An error occurred while processing the request: 
+{"Message":"banana\\Entity\\Product::setImg(): Argument #1 ($img) must be of type string, null given, called in \/var\/www\/html\/app\/Repository\/ProductRepository.php on line 52","File":"\/var\/www\/html\/app\/Entity\/Product.php","Line":50}
+
+An error occurred while processing the request: 
+{"Message":"banana\\Entity\\Product::__construct(): Argument #3 ($parent) must be of type int, null given, called in \/var\/www\/html\/app\/Repository\/ProductRepository.php on line 51","File":"\/var\/www\/html\/app\/Entity\/Product.php","Line":14}
+
+An error occurred while processing the request: 
+{"Message":"banana\\Entity\\Product::__construct(): Argument #3 ($parent) must be of type int, null given, called in \/var\/www\/html\/app\/Repository\/ProductRepository.php on line 51","File":"\/var\/www\/html\/app\/Entity\/Product.php","Line":14}
+
+An error occurred while processing the request: 
+{"Message":"banana\\Entity\\Category::__construct(): Argument #1 ($name) must be of type string, null given, called in \/var\/www\/html\/app\/Repository\/ProductRepository.php on line 73","File":"\/var\/www\/html\/app\/Entity\/Category.php","Line":12}
+
+An error occurred while processing the request: 
+{"Message":"banana\\Entity\\Category::__construct(): Argument #1 ($name) must be of type string, null given, called in \/var\/www\/html\/app\/Repository\/ProductRepository.php on line 73","File":"\/var\/www\/html\/app\/Entity\/Category.php","Line":12}
+
+An error occurred while processing the request: 
+{"Message":"banana\\Entity\\Category::setId(): Argument #1 ($id) must be of type int, null given, called in \/var\/www\/html\/app\/Repository\/ProductRepository.php on line 76","File":"\/var\/www\/html\/app\/Entity\/Category.php","Line":24}
+
+An error occurred while processing the request: 
+{"Message":"Call to undefined method banana\\Entity\\Category::getImg()","File":"\/var\/www\/html\/app\/Views\/catalog.phtml","Line":7}
+
+An error occurred while processing the request: 
+{"Message":"Call to undefined method banana\\Entity\\Category::getImg()","File":"\/var\/www\/html\/app\/Views\/catalog.phtml","Line":7}
+
+An error occurred while processing the request: 
+{"Message":"Cannot use object of type banana\\Entity\\Category as array","File":"\/var\/www\/html\/app\/Views\/catalog.phtml","Line":15}
+
+An error occurred while processing the request: 
+{"Message":"Cannot use object of type banana\\Entity\\Product as array","File":"\/var\/www\/html\/app\/Views\/catalog.phtml","Line":16}
+
+An error occurred while processing the request: 
+{"Message":"syntax error, unexpected token \"endforeach\", expecting \"elseif\" or \"else\" or \"endif\"","File":"\/var\/www\/html\/app\/Views\/catalog.phtml","Line":33}
+
+An error occurred while processing the request: 
+{"Message":"banana\\Container::get(): Argument #1 ($name) must be of type string, null given, called in \/var\/www\/html\/app\/App.php on line 33","File":"\/var\/www\/html\/app\/Container.php","Line":25}
+

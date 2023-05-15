@@ -1,18 +1,25 @@
 <form class="products" action="" method="POST">
     <div class="container_product">
+        <a href="/catalog" class="go">
+            Catalog
+        </a>
         <div class="products">
-            <?php foreach ($categories as $category): ?>
-                <div class="product">
-                    <div class="image">
-                        <img src="<?= $category->getImg(); ?>" alt="">
+            <?php foreach ($products as $product): ?>
+                <?php if ($product->getParent() === 3): ?>
+                    <div class="product">
+                        <div class="image">
+                            <img src="<?= $product->getImg(); ?>" alt="">
+                        </div>
+                        <div class="namePrice">
+                            <h3><?= $product->getName(); ?></h3>
+                            <h4>$ <?= $product->getPrice(); ?></h4>
+                        </div>
+                        <p>L</p>
+                        <div class="bay">
+                            <button> bay now </button>
+                        </div>
                     </div>
-                    <div class="namePrice">
-                        <h3><?= $category->getName(); ?></h3>
-                    </div>
-                    <a href="/catalog/<?=$category->getName();?>" class="go">
-                        Click
-                    </a>
-                </div>
+                <?php endif; ?>
             <?php endforeach; ?>
         </div>
     </div>

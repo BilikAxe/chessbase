@@ -2,20 +2,17 @@
 
 namespace banana\Entity;
 
-class Product
+class Category
 {
     private int $id;
     private string $name;
-    private float $price;
-    private int $parent;
     private string $img;
 
 
-    public function __construct(string $name, int $price, int $parent, string $img)
+
+    public function __construct(string $name, string $img)
     {
         $this->name = $name;
-        $this->price = $price;
-        $this->parent = $parent;
         $this->img = $img;
     }
 
@@ -30,7 +27,7 @@ class Product
     {
         $this->id = $id;
     }
-    
+
 
     public function getName(): string
     {
@@ -38,20 +35,8 @@ class Product
     }
 
 
-    public function getPrice(): int
-    {
-        return $this->price;
-    }
-
-
     public function getImg(): string
     {
         return $this->img;
-    }
-
-
-    public function getParent(): int
-    {
-        return $this->parent;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace banana\Repository;
 
+use banana\Entity\Category;
 use banana\Entity\Product;
 use PDO;
 
@@ -24,6 +25,8 @@ class ProductRepository
             $product = new Product(
                 $data['name'],
                 $data['price'],
+                $data['parent'],
+                $data['img']
             );
 
             $product->setId($data['id']);
@@ -45,15 +48,38 @@ class ProductRepository
         foreach ($data as $elem) {
             $product = new Product(
                 $elem['name'],
-                $elem['price']
+                $elem['price'],
+                $elem['parent'],
+                $elem['img']
             );
 
             $product->setId($elem['id']);
-            $product->setImg($elem['img']);
 
-            $products[] = $product;
+            $products[$elem['id']] = $product;
         }
 
         return $products;
+    }
+
+    public function getCategories(): array
+    {
+        $categories = [];
+
+        $result = $this->connection->query("SELECT * FROM categories");
+
+        $data = $result->fetchAll();
+
+        foreach ($data as $elem) {
+            $category = new Category(
+                $elem['name'],
+                $elem['img']
+            );
+
+            $category->setId($elem['id']);
+
+            $categories[$elem['id']] = $category;
+        }
+
+        return $categories;
     }
 }
