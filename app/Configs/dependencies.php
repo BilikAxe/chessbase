@@ -1,10 +1,15 @@
 <?php
 
 use banana\Container;
+use banana\Controllers\CartController;
 use banana\Controllers\CatalogController;
+use banana\Controllers\ProductController;
 use banana\Controllers\UserController;
 use banana\FileLogger;
 use banana\LoggerInterface;
+use banana\Repository\CartProductsRepository;
+use banana\Repository\CartRepository;
+use banana\Repository\CategoryRepository;
 use banana\Repository\ProductRepository;
 use banana\Repository\UserRepository;
 
@@ -24,10 +29,10 @@ return [
     },
 
 
-    CatalogController::class => function (Container $container) {
-        $productRepository = $container->get(ProductRepository::class);
+    ProductController::class => function (Container $container) {
+        $productRepository = $container->get((ProductRepository::class));
 
-        return new CatalogController($productRepository);
+        return new ProductController($productRepository);
     },
 
 
@@ -35,6 +40,41 @@ return [
         $connection = $container->get('db');
 
         return new ProductRepository($connection);
+    },
+
+
+    CatalogController::class => function (Container $container) {
+        $categoryRepository = $container->get(CategoryRepository::class);
+
+        return new CatalogController($categoryRepository);
+    },
+
+
+    CategoryRepository::class => function (Container $container) {
+        $connection = $container->get('db');
+
+        return new CategoryRepository($connection);
+    },
+
+
+    CartController::class => function (Container $container) {
+        $cartRepository = $container->get(CartRepository::class);
+
+        return new CartController($cartRepository);
+    },
+
+
+    CartRepository::class => function (Container $container) {
+        $connection = $container->get('db');
+
+        return new CartRepository($connection);
+    },
+
+
+    CartProductsRepository::class => function (Container $container) {
+        $connection = $container->get('db');
+
+        return new CartProductsRepository($connection);
     },
 
 

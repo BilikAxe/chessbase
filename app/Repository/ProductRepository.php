@@ -2,7 +2,6 @@
 
 namespace banana\Repository;
 
-use banana\Entity\Category;
 use banana\Entity\Product;
 use PDO;
 
@@ -10,10 +9,12 @@ class ProductRepository
 {
     private PDO $connection;
 
+
     public function __construct(PDO $connection)
     {
         $this->connection = $connection;
     }
+
 
     public function getProduct(int $id): Product|null
     {
@@ -25,7 +26,7 @@ class ProductRepository
             $product = new Product(
                 $data['name'],
                 $data['price'],
-                $data['parent'],
+                $data['category_id'],
                 $data['img']
             );
 
@@ -37,11 +38,12 @@ class ProductRepository
         return null;
     }
 
-    public function getAllProducts(): array
+    public function getAllProducts(int $categoryId): array
     {
         $products = [];
 
-        $result = $this->connection->query("SELECT * FROM products");
+        $result = $this->connection->prepare("SELECT * FROM products WHERE category_id = ?");
+        $result->execute([$categoryId]);
 
         $data = $result->fetchAll();
 
@@ -49,7 +51,7 @@ class ProductRepository
             $product = new Product(
                 $elem['name'],
                 $elem['price'],
-                $elem['parent'],
+                $elem['category_id'],
                 $elem['img']
             );
 
@@ -61,25 +63,5 @@ class ProductRepository
         return $products;
     }
 
-    public function getCategories(): array
-    {
-        $categories = [];
 
-        $result = $this->connection->query("SELECT * FROM categories");
-
-        $data = $result->fetchAll();
-
-        foreach ($data as $elem) {
-            $category = new Category(
-                $elem['name'],
-                $elem['img']
-            );
-
-            $category->setId($elem['id']);
-
-            $categories[$elem['id']] = $category;
-        }
-
-        return $categories;
-    }
 }

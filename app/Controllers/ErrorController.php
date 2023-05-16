@@ -4,7 +4,7 @@ namespace banana\Controllers;
 
 class ErrorController
 {
-    public function error(): array
+    public function error(): ?array
     {
         return [
             '../Views/error404.html',

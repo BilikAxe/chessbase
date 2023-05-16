@@ -15,9 +15,8 @@
             </div>
             <nav class="header__nav">
                 <ul class="header__menu">
-                    <li class="header__item"><a href="#" class="header__link">General</a></li>
-                    <li class="header__item"><a href="#" class="header__link">about</a></li>
-                    <li class="header__item"><a href="#" class="header__link">contact</a></li>
+                    <li class="header__item"><a href="/cart" class="header__link">Cart<span class="badge_backer_kol"> 0</span></a></li>
+                    <li class="header__item"><a href="/catalog" class="header__link">Catalog</a></li>
                 </ul>
             </nav>
         </div>
@@ -27,25 +26,29 @@
         <h1>  {content} </h1>
     </div>
 
-<!--    <footer>-->
-<!--        <div class="footer_container">-->
-<!--            <div class="logo"> <p>LOGO</p></div>-->
-<!--            <div class="social_media">-->
-<!--                <a href="#"><i class="fab fa-facebook-f"></i></a>-->
-<!--                <a href="#"><i class="fab fa-twitter"></i></a>-->
-<!--                <a href="#"><i class="fab fa-instagram"></i></a>-->
-<!--                <a href="#"><i class="fab fa-youtube"></i></a>-->
-<!--                <a href="#"><i class="fab fa-linkedin-in"></i></a>-->
-<!--            </div>-->
-<!--            <p>LOGO © 2023 Made with love</p>-->
-<!--        </div>-->
-<!--    </footer>-->
+    <footer>
+        <div class="footer_container">
+            <div class="logo"> <p>LOGO</p></div>
+            <div class="social_media">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <p>LOGO © 2023 Made with love</p>
+        </div>
+    </footer>
 </body>
 </html>
 <style>
 
     li {
         list-style: none;
+    }
+
+    .badge_backer_kol {
+        color: white;
     }
 
     .container {
@@ -75,7 +78,7 @@
     .header__link {
         font-size: 20px;
         text-transform: uppercase;
-        color: red;
+        color: white;
         text-decoration: none;
         position: relative;
     }
@@ -104,6 +107,7 @@
     }
 
     .ground{
+        height: 800px;
         font-size: 40px;
         display: flex;
         align-items: center;
@@ -115,11 +119,13 @@
 
     footer{
         flex: 0 0 auto;
-        background: #ff0005;
+        background: red;
         padding: 20px;
+        box-shadow: 11px -33px 60px rgba(0, 0, 0, 0.25);
     }
 
     .footer_container{
+        height: auto;
         max-width: 1300px;
         margin: auto;
         padding: 20px 20px;
@@ -139,7 +145,7 @@
     }
 
     .social_media a{
-        color: #395591;
+        color: white;
         font-size: 24px;
         text-decoration: none;
         transition: .6s;

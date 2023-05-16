@@ -2,16 +2,16 @@
 
 namespace banana\Controllers;
 
-use banana\Repository\ProductRepository;
+use banana\Repository\CategoryRepository;
 
 
 class CatalogController
 {
-    private ProductRepository $productRepository;
+    private CategoryRepository $categoryRepository;
 
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(CategoryRepository $categoryRepository)
     {
-        $this->productRepository = $productRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     public function openCatalog(): array
@@ -22,81 +22,12 @@ class CatalogController
 
         if (isset($_SESSION['id'])) {
 
-            $categories = $this->productRepository->getCategories();
+            $categories = $this->categoryRepository->getCategories();
 
             return [
                 '../Views/catalog.phtml',
                 [
                     'categories' => $categories
-                ],
-                true];
-        }
-
-        header("Location: /signin");
-        return [];
-    }
-
-
-    public function openLaptop(): array
-    {
-        if(session_status() === PHP_SESSION_NONE){
-            session_start();
-        }
-
-        if (isset($_SESSION['id'])) {
-
-            $products = $this->productRepository->getAllProducts();
-
-            return [
-                '../Views/laptop.phtml',
-                [
-                    'products' => $products,
-                ],
-                true];
-        }
-
-        header("Location: /signin");
-        return [];
-    }
-
-
-    public function openPhone(): array
-    {
-        if(session_status() === PHP_SESSION_NONE){
-            session_start();
-        }
-
-        if (isset($_SESSION['id'])) {
-
-            $products = $this->productRepository->getAllProducts();
-
-            return [
-                '../Views/phone.phtml',
-                [
-                    'products' => $products,
-                ],
-                true];
-        }
-
-        header("Location: /signin");
-        return [];
-    }
-
-
-    public function openTV(): array
-    {
-        if(session_status() === PHP_SESSION_NONE){
-            session_start();
-        }
-
-        if (isset($_SESSION['id'])) {
-
-            $products = $this->productRepository->getAllProducts();
-
-            return [
-                '../Views/tv.phtml',
-                [
-                    'products' => $products,
                 ],
                 true];
         }

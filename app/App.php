@@ -4,6 +4,7 @@ namespace banana;
 
 use banana\Controllers\ErrorController;
 
+
 class App
 {
     private Container $container;
@@ -25,6 +26,8 @@ class App
         try {
             $handler = $this->route();
 
+            list($handler, $id) = $handler;
+
             if (is_array($handler)) {
 
                 list($obj, $method) = $handler;
@@ -33,7 +36,11 @@ class App
                     $obj = $this->container->get($obj);
                 }
 
-                $response = $obj->$method();
+                if ($method === 'getAllProducts' || $method === 'openProduct') {
+                    $response = $obj->$method($id[1]);
+                } else {
+                    $response = $obj->$method();
+                }
 
             } else {
                 $response = $handler();
@@ -80,9 +87,14 @@ class App
 
 
         foreach ($this->routes[$method] as $pattern => $handler) {
-            if (preg_match("#^$pattern$#", $requestUri)) {
 
-                return $handler;
+
+            if (preg_match("#^$pattern$#", $requestUri, $param)) {
+
+                return [
+                    $handler,
+                    $param,
+                ];
             }
         }
 

@@ -20,9 +20,8 @@ $app->get('/signup', [\banana\Controllers\UserController::class, 'signUp']);
 $app->get('/signin', [\banana\Controllers\UserController::class, 'signIn']);
 $app->get('/catalog', [\banana\Controllers\CatalogController::class, 'openCatalog']);
 $app->get('/error', [\banana\Controllers\ErrorController::class, 'error']);
-$app->get('/catalog/Laptop', [\banana\Controllers\CatalogController::class, 'openLaptop']);
-$app->get('/catalog/Phone', [\banana\Controllers\CatalogController::class, 'openPhone']);
-$app->get('/catalog/TV', [\banana\Controllers\CatalogController::class, 'openTV']);
+$app->get('/catalog/\b(1|2|3)\b', [\banana\Controllers\ProductController::class, 'openProduct']);
+$app->get('/cart', [\banana\Controllers\CartController::class, 'openCart']);
 
 
 $app->post('/signup', [\banana\Controllers\UserController::class, 'signUp']);

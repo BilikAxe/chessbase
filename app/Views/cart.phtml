@@ -1,3 +1,50 @@
 
+<body>
 
+<table>
+    <tr>
+        <td>id</td>
+        <td>quantity</td>
+        <td>delete</td>
+    </tr>
+</table>
+<?php //session_start();
+//if (!isset($_SESSION['cart'])):?>
+<!---->
+<!--    <h2>Ваша корзина пуста</h2>-->
+<!---->
+<?php //else :?>
+<!--    <table>-->
+<!--        <tr>-->
+<!--            <td>id</td>-->
+<!--            <td>количество</td>-->
+<!--            <td>Удалить</td>-->
+<!--        </tr>-->
+<!--        --><?php //$temp=$_SESSION['cart'];
+//        foreach($temp as $id=>$kol): ?>
+<!--            <tr id="--><?php //=$id?><!--">-->
+<!--                <td>id товара: --><?php //=$id?><!--</td>-->
+<!--                <td><input type="number" class="count-product" id="--><?php //=$id?><!--" value="--><?php //=$kol?><!--"></td>-->
+<!--                <td><button class="btn btn-default btn-del" id="--><?php //=$id?><!--">Удалить</button></td>-->
+<!--            </tr>-->
+<!--        --><?php //endforeach; ?>
+<!--    </table>-->
+<?php //endif; ?>
 
+</body>
+
+<style>
+    tr {
+        position: relative;
+        background-color: var(--sectionBack);
+        width: 1000px;
+        height: 600px;
+        box-shadow: -11px 11px 22px blue, 11px -11px 22px red;
+        display: flex;
+        /*flex-direction: column;*/
+        justify-content: space-between;
+        padding: 20px 20px 40px;
+        border-radius: 10px;
+        transition: .3s;
+    }
+</style>

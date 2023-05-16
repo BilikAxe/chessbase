@@ -48,6 +48,8 @@ class Cart
 
     public function getGrandTotal(): int
     {
+        $this->grandTotal = 0;
+
 
         return $this->grandTotal;
     }

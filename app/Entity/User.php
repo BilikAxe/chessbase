@@ -11,6 +11,7 @@ class User
     private string $surname;
     private string $phoneNumber;
     private string $password;
+    private int $cartId;
 
 
     public function __construct(
@@ -19,7 +20,7 @@ class User
         string $lastName,
         string $surname,
         string $phoneNumber,
-        string $password
+        string $password,
     ) {
         $this->email = $email;
         $this->firstName = $firstName;
@@ -72,5 +73,17 @@ class User
     public function getPassword(): string
     {
         return $this->password;
+    }
+
+
+    public function setCart(int $cartId): void
+    {
+        $this->cartId = $cartId;
+    }
+
+
+    public function getCart(): int
+    {
+        return $this->cartId;
     }
 }
