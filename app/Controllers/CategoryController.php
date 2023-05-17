@@ -25,7 +25,7 @@ class CategoryController
             $categories = $this->categoryRepository->getCategories();
 
             return [
-                '../Views/category.phtml',
+                '../Views/categories.phtml',
                 [
                     'categories' => $categories
                 ],

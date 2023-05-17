@@ -16,10 +16,10 @@ class ProductRepository
     }
 
 
-    public function getProductByCart(int $userId): array
+    public function getProductByUser(int $userId): array
     {
         $result = $this->connection->prepare(
-             "SELECT * FROM products p 
+             "SELECT * FROM products p
                     INNER JOIN cart_products c_p ON c_p.product_id = p.id 
                     INNER JOIN carts c ON c.id = c_p.cart_id
                     INNER JOIN users u ON u.cart_id = c.id
@@ -47,7 +47,7 @@ class ProductRepository
         return $products;
     }
 
-    public function getProductByCategory(int $categoryId): array
+    public function getProductsByCategory(int $categoryId): array
     {
         $products = [];
 

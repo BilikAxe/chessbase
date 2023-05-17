@@ -14,7 +14,7 @@ class ProductController
         $this->productRepository = $productRepository;
     }
 
-    public function openProductByCategory(int $categoryId): array
+    public function getProductsByCategory(int $categoryId): array
     {
         if(session_status() === PHP_SESSION_NONE){
             session_start();
@@ -22,12 +22,13 @@ class ProductController
 
         if (isset($_SESSION['id'])) {
 
-            $products = $this->productRepository->getProductByCategory($categoryId);
+            $products = $this->productRepository->getProductsByCategory($categoryId);
 
             return [
-                '../Views/product.phtml',
+                '../Views/categoryProducts.phtml',
                 [
                     'products' => $products,
+                    'categoryId' => $categoryId,
                 ],
                 true];
         }

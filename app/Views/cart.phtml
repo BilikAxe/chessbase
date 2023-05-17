@@ -1,25 +1,13 @@
 <form class="products" action="" method="POST">
-    <div class="container_product">
-        <div class="products">
             <?php foreach ($cartProducts as $product): ?>
 
-                <div class="product">
-                    <div class="image">
-                        <img src="<?= $product->getImg(); ?>" alt="">
-                    </div>
                     <div class="namePrice">
                         <h3><?= $product->getName(); ?></h3>
                         <h4>$ <?= $product->getPrice(); ?></h4>
+
                     </div>
-                    <p></p>
-                    <div class="bay">
-                        <a href="#" id="<?= $product->getId() ?>">Add to cart</a>
-                    </div>
-                </div>
 
             <?php endforeach; ?>
-        </div>
-    </div>
 </form>
 <style>
     :root{

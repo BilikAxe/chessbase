@@ -2,7 +2,6 @@
 
 namespace banana\Controllers;
 
-use banana\Repository\CartRepository;
 use banana\Repository\ProductRepository;
 
 class CartController
@@ -24,7 +23,7 @@ class CartController
 
         if (isset($_SESSION['id'])) {
 
-            $cartProducts = $this->productRepository->getProductByCart($_SESSION['id']);
+            $cartProducts = $this->productRepository->getProductByUser($_SESSION['id']);
 
             return [
                 '../Views/cart.phtml',
@@ -34,4 +33,28 @@ class CartController
 
         return [];
     }
+
+
+    public function addToCart(int $categoryId): array
+    {
+        if(session_status() === PHP_SESSION_NONE){
+            session_start();
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+//            print_r($_POST);die;
+
+
+//            header("Location: /category/$categoryId");
+//            die;
+
+
+
+        }
+
+
+
+    }
+
 }

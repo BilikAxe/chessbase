@@ -60,9 +60,9 @@ class UserRepository
                 $data['surname'],
                 $data['phone_number'],
                 $data['password'],
-                $data['cart_id'],
             );
 
+            $user->setCart($data['cart_id']);
             $user->setId($data['id']);
 
             return $user;

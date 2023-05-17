@@ -19,3 +19,15 @@ An error occurred while processing the request:
 An error occurred while processing the request: 
 {"Message":"banana\\Entity\\Product::__construct(): Argument #1 ($name) must be of type string, null given, called in \/var\/www\/html\/app\/Repository\/ProductRepository.php on line 37","File":"\/var\/www\/html\/app\/Entity\/Product.php","Line":14}
 
+An error occurred while processing the request: 
+{"Message":"Call to a member function getName() on int","File":"\/var\/www\/html\/app\/Views\/cart.phtml","Line":5}
+
+An error occurred while processing the request: 
+{"Message":"Too few arguments to function banana\\Controllers\\CartController::addToCart(), 0 passed in \/var\/www\/html\/app\/App.php on line 40 and exactly 1 expected","File":"\/var\/www\/html\/app\/Controllers\/CartController.php","Line":38}
+
+An error occurred while processing the request: 
+{"Message":"Too few arguments to function banana\\Controllers\\CartController::addToCart(), 0 passed in \/var\/www\/html\/app\/App.php on line 40 and exactly 1 expected","File":"\/var\/www\/html\/app\/Controllers\/CartController.php","Line":38}
+
+An error occurred while processing the request: 
+{"Message":"Too few arguments to function banana\\Controllers\\CartController::addToCart(), 0 passed in \/var\/www\/html\/app\/App.php on line 40 and exactly 1 expected","File":"\/var\/www\/html\/app\/Controllers\/CartController.php","Line":38}
+
