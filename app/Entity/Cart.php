@@ -6,8 +6,8 @@ class Cart
 {
     private int $id;
     private int $userId;
-    private array $products = [];
-    private int $grandTotal;
+
+
 
 
     public function __construct(int $userId)

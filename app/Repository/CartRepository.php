@@ -16,10 +16,10 @@ class CartRepository
     }
 
 
-    public function getCart(int $userId): Cart
+    public function getCart(int $cartId): Cart
     {
-        $result = $this->connection->prepare("SELECT * FROM carts WHERE user_id = ?");
-        $result->execute([$userId]);
+        $result = $this->connection->prepare("SELECT * FROM cart_products WHERE cart_id = ?");
+        $result->execute([$cartId]);
 
         $data = $result->fetchAll();
 

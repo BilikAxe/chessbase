@@ -2,7 +2,7 @@
 
 use banana\Container;
 use banana\Controllers\CartController;
-use banana\Controllers\CatalogController;
+use banana\Controllers\CategoryController;
 use banana\Controllers\ProductController;
 use banana\Controllers\UserController;
 use banana\FileLogger;
@@ -43,10 +43,10 @@ return [
     },
 
 
-    CatalogController::class => function (Container $container) {
+    CategoryController::class => function (Container $container) {
         $categoryRepository = $container->get(CategoryRepository::class);
 
-        return new CatalogController($categoryRepository);
+        return new CategoryController($categoryRepository);
     },
 
 

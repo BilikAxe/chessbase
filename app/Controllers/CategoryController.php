@@ -5,7 +5,7 @@ namespace banana\Controllers;
 use banana\Repository\CategoryRepository;
 
 
-class CatalogController
+class CategoryController
 {
     private CategoryRepository $categoryRepository;
 
@@ -25,7 +25,7 @@ class CatalogController
             $categories = $this->categoryRepository->getCategories();
 
             return [
-                '../Views/catalog.phtml',
+                '../Views/category.phtml',
                 [
                     'categories' => $categories
                 ],

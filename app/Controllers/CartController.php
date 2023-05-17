@@ -22,6 +22,9 @@ class CartController
         }
 
         if (isset($_SESSION['id'])) {
+
+            $cart = $this->cartRepository->getCart();
+
             return [
                 '../Views/cart.phtml',
                 [],

@@ -26,7 +26,7 @@ class App
         try {
             $handler = $this->route();
 
-            list($handler, $id) = $handler;
+            list($handler, $params) = $handler;
 
             if (is_array($handler)) {
 
@@ -36,10 +36,11 @@ class App
                     $obj = $this->container->get($obj);
                 }
 
-                if ($method === 'getAllProducts' || $method === 'openProduct') {
-                    $response = $obj->$method($id[1]);
-                } else {
+                if (empty($params)) {
                     $response = $obj->$method();
+                } else {
+                    $params = array_values($params);
+                    $response = $obj->$method(...$params);
                 }
 
             } else {
@@ -85,20 +86,26 @@ class App
         $requestUri = $_SERVER['REQUEST_URI'];
         $method = $_SERVER['REQUEST_METHOD'];
 
-
         foreach ($this->routes[$method] as $pattern => $handler) {
 
+            $params = [];
 
-            if (preg_match("#^$pattern$#", $requestUri, $param)) {
+            if (preg_match("#^$pattern$#", $requestUri, $params)) {
+
+                foreach ($params as $key => $value) {
+                    if ($key === 0 || intval($key)) {
+                        unset($params[$key]);
+                    }
+                }
 
                 return [
                     $handler,
-                    $param,
+                    $params,
                 ];
             }
         }
 
-        return [ErrorController::class, 'error'];
+        return [[ErrorController::class, 'error'], null];
     }
 
 
