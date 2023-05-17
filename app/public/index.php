@@ -20,7 +20,7 @@ $app->get('/signup', [\banana\Controllers\UserController::class, 'signUp']);
 $app->get('/signin', [\banana\Controllers\UserController::class, 'signIn']);
 $app->get('/category', [\banana\Controllers\CategoryController::class, 'openCatalog']);
 $app->get('/error', [\banana\Controllers\ErrorController::class, 'error']);
-$app->get('/category/\b(?<categoryId>[0-9])\b', [\banana\Controllers\ProductController::class, 'openProduct']);
+$app->get('/category/\b(?<categoryId>[0-9])\b', [\banana\Controllers\ProductController::class, 'openProductByCategory']);
 $app->get('/cart', [\banana\Controllers\CartController::class, 'openCart']);
 
 

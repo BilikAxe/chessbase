@@ -11,7 +11,7 @@ class Product
     private string $img;
 
 
-    public function __construct(string $name, int $price, int $parent, string $img)
+    public function __construct(string $name, float $price, int $parent, string $img)
     {
         $this->name = $name;
         $this->price = $price;
@@ -38,7 +38,7 @@ class Product
     }
 
 
-    public function getPrice(): int
+    public function getPrice(): float
     {
         return $this->price;
     }

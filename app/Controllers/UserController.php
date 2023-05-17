@@ -216,7 +216,7 @@ class UserController
 
                     $_SESSION['id'] = $userData->getId();
 
-                    header("Location: /catalog");
+                    header("Location: /category");
                     die;
                 }
 

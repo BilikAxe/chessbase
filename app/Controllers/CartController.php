@@ -3,15 +3,16 @@
 namespace banana\Controllers;
 
 use banana\Repository\CartRepository;
+use banana\Repository\ProductRepository;
 
 class CartController
 {
-    private CartRepository $cartRepository;
+    private ProductRepository $productRepository;
 
 
-    public function __construct(CartRepository $cartRepository)
+    public function __construct(ProductRepository $productRepository)
     {
-        $this->cartRepository = $cartRepository;
+        $this->productRepository = $productRepository;
     }
 
 
@@ -23,11 +24,11 @@ class CartController
 
         if (isset($_SESSION['id'])) {
 
-            $cart = $this->cartRepository->getCart();
+            $cartProducts = $this->productRepository->getProductByCart($_SESSION['id']);
 
             return [
                 '../Views/cart.phtml',
-                [],
+                ['cartProducts' => $cartProducts],
                 true];
         }
 

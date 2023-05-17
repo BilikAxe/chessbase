@@ -58,23 +58,9 @@ return [
 
 
     CartController::class => function (Container $container) {
-        $cartRepository = $container->get(CartRepository::class);
+        $productRepository = $container->get(ProductRepository::class);
 
-        return new CartController($cartRepository);
-    },
-
-
-    CartRepository::class => function (Container $container) {
-        $connection = $container->get('db');
-
-        return new CartRepository($connection);
-    },
-
-
-    CartProductsRepository::class => function (Container $container) {
-        $connection = $container->get('db');
-
-        return new CartProductsRepository($connection);
+        return new CartController($productRepository);
     },
 
 

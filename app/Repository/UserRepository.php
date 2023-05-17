@@ -59,7 +59,8 @@ class UserRepository
                 $data['last_name'],
                 $data['surname'],
                 $data['phone_number'],
-                $data['password']
+                $data['password'],
+                $data['cart_id'],
             );
 
             $user->setId($data['id']);

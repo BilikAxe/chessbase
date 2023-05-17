@@ -16,29 +16,38 @@ class ProductRepository
     }
 
 
-    public function getProduct(int $id): Product|null
+    public function getProductByCart(int $userId): array
     {
-        $result = $this->connection->prepare("SELECT * FROM products WHERE id = ?");
-        $result->execute([$id]);
-        $data = $result->fetch();
+        $result = $this->connection->prepare(
+             "SELECT * FROM products p 
+                    INNER JOIN cart_products c_p ON c_p.product_id = p.id 
+                    INNER JOIN carts c ON c.id = c_p.cart_id
+                    INNER JOIN users u ON u.cart_id = c.id
+                    WHERE u.id = ?"
+        );
 
-        if ($data) {
+        $result->execute([$userId]);
+        $data = $result->fetchAll();
+
+        $products = [];
+
+        foreach ($data as $elem) {
             $product = new Product(
-                $data['name'],
-                $data['price'],
-                $data['category_id'],
-                $data['img']
+                $elem['name'],
+                $elem['price'],
+                $elem['category_id'],
+                $elem['img']
             );
 
-            $product->setId($data['id']);
+            $product->setId($elem['id']);
 
-            return $product;
+            $products[] = $product;
         }
 
-        return null;
+        return $products;
     }
 
-    public function getAllProducts(int $categoryId): array
+    public function getProductByCategory(int $categoryId): array
     {
         $products = [];
 

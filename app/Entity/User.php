@@ -21,6 +21,7 @@ class User
         string $surname,
         string $phoneNumber,
         string $password,
+        int $cartId
     ) {
         $this->email = $email;
         $this->firstName = $firstName;
@@ -28,6 +29,7 @@ class User
         $this->surname = $surname;
         $this->phoneNumber = $phoneNumber;
         $this->password = $password;
+        $this->cartId = $cartId;
     }
 
     public function setId(int $id): void
@@ -73,12 +75,6 @@ class User
     public function getPassword(): string
     {
         return $this->password;
-    }
-
-
-    public function setCart(int $cartId): void
-    {
-        $this->cartId = $cartId;
     }
 
 
