@@ -2,26 +2,24 @@
 
 namespace banana\Controllers;
 
+use banana\Entity\Cart;
 use banana\Entity\CartProducts;
 use banana\Repository\CartProductsRepository;
-use banana\Repository\CartRepository;
 use banana\Repository\ProductRepository;
 use banana\Repository\UserRepository;
+
 
 class CartController
 {
     private CartProductsRepository $cartProductsRepository;
     private ProductRepository $productRepository;
     private UserRepository $userRepository;
-    private CartRepository $cartRepository;
 
-
-    public function __construct(ProductRepository $productRepository, CartProductsRepository $cartProductsRepository, UserRepository $userRepository, CartRepository $cartRepository)
+    public function __construct(CartProductsRepository $cartProductsRepository, ProductRepository $productRepository, UserRepository $userRepository)
     {
         $this->cartProductsRepository = $cartProductsRepository;
         $this->productRepository = $productRepository;
         $this->userRepository = $userRepository;
-        $this->cartRepository = $cartRepository;
     }
 
 
@@ -33,7 +31,7 @@ class CartController
 
         if (isset($_SESSION['id'])) {
 
-            $cartProducts = $this->cartProductsRepository->getProductsByUser($_SESSION['id']);
+            $cartProducts = $this->cartProductsRepository->getByUser($_SESSION['id']);
 
             return [
                 '../Views/cart.phtml',
@@ -49,31 +47,38 @@ class CartController
     {
         $errorMessage = [];
         $categoryId = $_POST['categoryId'];
+        $productId = $_POST['productId'];
 
         if(session_status() === PHP_SESSION_NONE){
             session_start();
         }
+
+
         if (isset($_SESSION['id'])) {
+
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-                $errorMessage = $this->validate($_POST['productId']);
-//                echo "<pre>" . print_r($_POST, true) . "</pre>";die;
+                $errorMessage = $this->validate($categoryId);
 
                 if (empty($errorMessage)) {
 
-                    $product = $this->productRepository->getProduct($_POST['productId']);
-                    $cartId = $this->userRepository->getUserByUserId($_SESSION['id'])->getCartId();
-                    $cart = $this->cartRepository->getCartByCartId($cartId);
-                    $quantity = $this->cartProductsRepository->getQuantity($_POST['productId']);
-                    $products = $this->cartProductsRepository->getProductsByUser($_SESSION['id']);
-//                    echo "<pre>" . print_r($products, true) . "</pre>";die;
-                    if (in_array($product, $products)) {
-                        $quantity++;
-                        $this->cartProductsRepository->addQuantity($quantity, $_POST['productId']);
-                    }
+                    $cartId = $this->userRepository->getCartId($_SESSION['id']);
+                    $cartProduct = $this->cartProductsRepository->getOne($productId);
 
-                    $cartProduct = new CartProducts($product, $cart, $quantity);
-                    $this->cartProductsRepository->saveProductInCart($cartProduct);
+                    if ($cartProduct) {
+                        $quantity = $cartProduct->getQuantity();
+                        $quantity++;
+                        $cartProduct->setQuantity($quantity);
+                        $this->cartProductsRepository->updateQuantity($cartProduct);
+                    } else {
+//                        echo "<pre>" . print_r($cartId, true) . "</pre>";die;
+                        $product = $this->productRepository->getProduct($productId);
+                        $cart = new Cart($_SESSION['id']);
+                        $cart->setCartId($cartId);
+                        $quantity = 1;
+                        $cartProduct = new CartProducts($product, $cart, $quantity);
+                        $this->cartProductsRepository->save($cartProduct);
+                    }
 
 
                     header("Location: /category/$categoryId");

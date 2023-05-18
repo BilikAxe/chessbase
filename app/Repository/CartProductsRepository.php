@@ -18,22 +18,41 @@ class CartProductsRepository
     }
 
 
-    public function getQuantity(int $productId): int|null
+    public function getOne(int $productId): CartProducts|null
     {
-        $result = $this->connection->prepare("SELECT quantity FROM cart_products WHERE product_id = ?");
+        $result = $this->connection->prepare(
+            "SELECT * FROM cart_products c_p
+                   INNER JOIN carts c on c_p.cart_id = c.id
+                   INNER JOIN users u on c.user_id = u.id
+                   INNER JOIN products p on c_p.product_id = p.id
+                   WHERE p.id = ?"
+        );
         $result->execute([$productId]);
 
         $data = $result->fetch();
-
+//        echo "<pre>" . print_r($data, true) . "</pre>";die;
         if ($data) {
-            return (int)$data;
+            $product = new Product(
+                $data['name'],
+                $data['price'],
+                $data['category_id'],
+                $data['img'],
+            );
+
+            $product->setId($data['id']);
+
+            $cart = new Cart($data['user_id']);
+
+            $cart->setCartId($data['cart_id']);
+
+            return new CartProducts($product, $cart, $data['quantity']);
         }
 
         return null;
     }
 
 
-    public function getProductsByUser(int $userId): array
+    public function getByUser(int $userId): array
     {
         $result = $this->connection->prepare(
             "SELECT * FROM cart_products c_p
@@ -71,7 +90,17 @@ class CartProductsRepository
     }
 
 
-    public function saveProductInCart(CartProducts $product): void
+    public function updateQuantity(CartProducts $cartProduct): void
+    {
+        $result = $this->connection->prepare("UPDATE cart_products SET quantity = :quantity WHERE product_id = :productId");
+        $result->execute([
+            'quantity' => $cartProduct->getQuantity(),
+            'productId' => $cartProduct->getProduct()->getId(),
+        ]);
+    }
+
+
+    public function save(CartProducts $product): void
     {
         $result = $this->connection->prepare("
                    INSERT INTO cart_products (
@@ -87,21 +116,11 @@ class CartProductsRepository
 
         $result->execute([
             'cart_id' => $product->getCart()->getCartId(),
-            'product_id' => $product->getProducts()->getId(),
+            'product_id' => $product->getProduct()->getId(),
             'quantity' => $product->getQuantity()
         ]);
     }
 
 
-    public function addQuantity(int $quantity, int $productId): void
-    {
-        $result = $this->connection->prepare("
-                UPDATE cart_products SET quantity = :quantity WHERE product_id = :productId
-        ");
 
-        $result->execute([
-            'quantity' => $quantity,
-            'product_id' => $productId,
-        ]);
-    }
 }

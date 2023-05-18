@@ -31,7 +31,7 @@ class UserRepository
                         :surname, 
                         :phone_number, 
                         :password)
-        ");
+                ");
 
         $sth->execute([
             'email' => $user->getEmail(),
@@ -43,6 +43,16 @@ class UserRepository
         ]);
     }
 
+
+    public function getCartId(int $userId): int
+    {
+        $result = $this->connection->prepare("SELECT cart_id FROM users WHERE id = ?");
+        $result->execute([$userId]);
+
+        $data = $result->fetch();
+
+        return (int)$data;
+    }
 
 
     public function getUserByEmail(string $email): User|null

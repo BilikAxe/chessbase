@@ -17,7 +17,7 @@ class CartProducts
     }
 
 
-    public function getProducts(): Product
+    public function getProduct(): Product
     {
         return $this->product;
     }
@@ -27,6 +27,13 @@ class CartProducts
     {
         return $this->cart;
     }
+
+
+    public function setQuantity(int $quantity): void
+    {
+        $this->quantity = $quantity;
+    }
+
 
     public function getQuantity(): int
     {

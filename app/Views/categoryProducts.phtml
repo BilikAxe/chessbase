@@ -1,31 +1,28 @@
-<form action="/add" method="POST">
-    <div class="container_product">
-        <div class="products">
-            <?php foreach ($products as $product): ?>
-
-                <div class="product">
-                    <div class="image">
-                        <img src="<?= $product->getImg(); ?>" alt="">
-                    </div>
-                    <div class="namePrice">
-                        <h3><?= $product->getName(); ?></h3>
-                        <h4>$ <?= $product->getPrice(); ?></h4>
-
-                    </div>
-                    <p></p>
-                    <div class="bay">
-                        <input type="submit" name="productId" value=<?= $product->getId(); ?>>
-                        <input type="hidden" name="categoryId" value="<?= $categoryId; ?>">
-
-<!--                        <input type="submit" value="Add to cart">-->
-                    </div>
+<div class="container_product">
+    <div class="products">
+        <?php foreach ($products as $product): ?>
+            <div class="product">
+                <div class="image">
+                    <img src="<?= $product->getImg(); ?>" alt="">
                 </div>
-
-            <?php endforeach; ?>
-        </div>
+                <div class="namePrice">
+                    <h3><?= $product->getName(); ?></h3>
+                    <h4>$ <?= $product->getPrice(); ?></h4>
+                </div>
+                <p></p>
+                <form action="/add" method="POST">
+                    <div class="bay">
+                        <input type="hidden" name="productId" value=<?= $product->getId(); ?>>
+                        <input type="hidden" name="categoryId" value="<?= $categoryId; ?>">
+                        <button>Add to cart</button>
+                    </div>
+                </form>
+            </div>
+        <?php endforeach; ?>
     </div>
-</form>
+</div>
 <style>
+
     :root{
         --bodyBack: #ffeaed;
         --textColor: #1b2741;
@@ -103,7 +100,7 @@
         bottom: 20px;
         right: 20px;
     }
-    .bay input{
+    .bay button{
         padding: 10px 20px;
         border-radius: 7px;
         border: none;
@@ -115,7 +112,7 @@
         transition: .5s;
         text-decoration: none;
     }
-    .bay input:hover{
+    .bay button:hover{
         transform: scale(1.1);
     }
 
