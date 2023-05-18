@@ -2,6 +2,8 @@
 
 namespace banana\Repository;
 
+use banana\Entity\Cart;
+use banana\Entity\CartProducts;
 use banana\Entity\Product;
 use PDO;
 
@@ -16,13 +18,39 @@ class ProductRepository
     }
 
 
+    public function saveProductInCart(CartProducts $cartProducts): void
+    {
+
+    }
+
+
+    public function getProduct(int $productId): Product
+    {
+        $result = $this->connection->prepare("SELECT * FROM products WHERE id = ?");
+        $result->execute([$productId]);
+
+        $data = $result->fetch();
+
+        $product = new Product(
+            $data['name'],
+            $data['price'],
+            $data['category_id'],
+            $data['img'],
+        );
+
+        $product->setId($data['id']);
+
+        return $product;
+    }
+
+
     public function getProductByUser(int $userId): array
     {
         $result = $this->connection->prepare(
-             "SELECT * FROM products p
-                    INNER JOIN cart_products c_p ON c_p.product_id = p.id 
-                    INNER JOIN carts c ON c.id = c_p.cart_id
-                    INNER JOIN users u ON u.cart_id = c.id
+             "SELECT * FROM cart_products c_p
+                    INNER JOIN carts c on c_p.cart_id = c.id
+                    INNER JOIN products p on c_p.product_id = p.id
+                    INNER JOIN users u on c.user_id = u.id
                     WHERE u.id = ?"
         );
 
@@ -41,7 +69,13 @@ class ProductRepository
 
             $product->setId($elem['id']);
 
-            $products[] = $product;
+            $cart = new Cart($elem['user_id']);
+
+            $cart->setId($elem['cart_id']);
+
+            $cartProducts = new CartProducts($product, $cart, $elem['quantity']);
+
+            $products[] = $cartProducts;
         }
 
         return $products;

@@ -2,6 +2,7 @@
 
 namespace banana\Controllers;
 
+use banana\Entity\CartProducts;
 use banana\Repository\ProductRepository;
 
 class CartController
@@ -35,26 +36,48 @@ class CartController
     }
 
 
-    public function addToCart(int $categoryId): array
+    public function addToCart(): array
     {
+        $errorMessage = [];
+        $categoryId = $_POST['categoryId'];
+
         if(session_status() === PHP_SESSION_NONE){
             session_start();
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-//            print_r($_POST);die;
+            $errorMessage = $this->validate($_POST['productId']);
+
+            if (empty($errorMessage)) {
+
+                $cartProduct = new CartProducts($this->productRepository->getProduct($_POST['productId']));
 
 
-//            header("Location: /category/$categoryId");
-//            die;
 
-
-
+                header("Location: /category/$categoryId");
+                die;
+            }
         }
 
+        return [
+            "../Views/category/$categoryId",
+            ['errorMessage' => $errorMessage],
+            true,
+        ];
+
+    }
 
 
+    private function validate(int $productId): array
+    {
+        $errorMessage = [];
+
+        if (empty($productId)) {
+            $errorMessage['productId'] = 'Invalid productId';
+        }
+
+        return $errorMessage;
     }
 
 }

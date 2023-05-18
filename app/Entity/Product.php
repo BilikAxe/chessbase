@@ -7,15 +7,15 @@ class Product
     private int $id;
     private string $name;
     private float $price;
-    private int $parent;
+    private int $categoryId;
     private string $img;
 
 
-    public function __construct(string $name, float $price, int $parent, string $img)
+    public function __construct(string $name, float $price, int $categoryId, string $img)
     {
         $this->name = $name;
         $this->price = $price;
-        $this->parent = $parent;
+        $this->categoryId = $categoryId;
         $this->img = $img;
     }
 
@@ -50,8 +50,8 @@ class Product
     }
 
 
-    public function getParent(): int
+    public function getCategoryId(): int
     {
-        return $this->parent;
+        return $this->categoryId;
     }
 }

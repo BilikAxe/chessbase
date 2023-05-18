@@ -20,14 +20,15 @@ $app->get('/signup', [\banana\Controllers\UserController::class, 'signUp']);
 $app->get('/signin', [\banana\Controllers\UserController::class, 'signIn']);
 $app->get('/category', [\banana\Controllers\CategoryController::class, 'openCatalog']);
 $app->get('/error', [\banana\Controllers\ErrorController::class, 'error']);
-$app->get('/category/\b(?<categoryId>[0-9])\b', [\banana\Controllers\ProductController::class, 'getProductsByCategory']);
+$app->get('/category/\b(?<categoryId>[0-9]+)\b', [\banana\Controllers\ProductController::class, 'getProductsByCategory']);
 $app->get('/cart', [\banana\Controllers\CartController::class, 'openCart']);
+
 
 
 $app->post('/signup', [\banana\Controllers\UserController::class, 'signUp']);
 $app->post('/signin', [\banana\Controllers\UserController::class, 'signIn']);
 $app->post('/category', [\banana\Controllers\CategoryController::class, 'openCatalog']);
-//$app->post('/category/\b(?<categoryId>[0-9])\b', [\banana\Controllers\CartController::class, 'addToCart']);
+$app->post('/add', [\banana\Controllers\CartController::class, 'addToCart']);
 
 
 $app->run();

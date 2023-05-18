@@ -41,6 +41,7 @@ class App
                 } else {
                     $params = array_values($params);
                     $response = $obj->$method(...$params);
+
                 }
 
             } else {
