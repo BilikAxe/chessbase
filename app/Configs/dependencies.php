@@ -59,8 +59,25 @@ return [
 
     CartController::class => function (Container $container) {
         $productRepository = $container->get(ProductRepository::class);
+        $cartProductRepository = $container->get(CartProductsRepository::class);
+        $userRepository = $container->get(UserRepository::class);
+        $cartRepository = $container->get(CartRepository::class);
 
-        return new CartController($productRepository);
+        return new CartController($productRepository, $cartProductRepository, $userRepository, $cartRepository);
+    },
+
+
+    CartProductsRepository::class => function (Container $container) {
+        $connection = $container->get('db');
+
+        return new CartProductsRepository($connection);
+    },
+
+
+    CartRepository::class => function (Container $container) {
+        $connection = $container->get('db');
+
+        return new CartRepository($connection);
     },
 
 

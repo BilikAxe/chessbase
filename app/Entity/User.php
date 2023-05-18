@@ -76,13 +76,13 @@ class User
     }
 
 
-    public function getCart(): int
+    public function getCartId(): int
     {
         return $this->cartId;
     }
 
 
-    public function setCart(int $cartId): void
+    public function setCartId(int $cartId): void
     {
         $this->cartId = $cartId;
     }

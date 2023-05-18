@@ -9,9 +9,11 @@ class CartProducts
     private int $quantity;
 
 
-    public function __construct(Product $product)
+    public function __construct(Product $product, Cart $cart, int $quantity)
     {
         $this->product = $product;
+        $this->cart = $cart;
+        $this->quantity = $quantity;
     }
 
 
@@ -21,23 +23,10 @@ class CartProducts
     }
 
 
-    public function setCart(Cart $cart): void
-    {
-        $this->cart = $cart;
-    }
-
-
     public function getCart(): Cart
     {
         return $this->cart;
     }
-
-
-    public function setQuantity(int $quantity): void
-    {
-        $this->quantity = $quantity;
-    }
-
 
     public function getQuantity(): int
     {
