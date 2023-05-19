@@ -2,7 +2,7 @@
 
 namespace banana\Entity;
 
-class CartProducts
+class CartProduct
 {
     private Product $product;
     private Cart $cart;

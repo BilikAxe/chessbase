@@ -11,7 +11,7 @@ class User
     private string $surname;
     private string $phoneNumber;
     private string $password;
-    private int $cartId;
+
 
 
     public function __construct(
@@ -73,17 +73,5 @@ class User
     public function getPassword(): string
     {
         return $this->password;
-    }
-
-
-    public function getCartId(): int
-    {
-        return $this->cartId;
-    }
-
-
-    public function setCartId(int $cartId): void
-    {
-        $this->cartId = $cartId;
     }
 }

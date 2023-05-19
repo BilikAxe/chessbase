@@ -60,9 +60,9 @@ return [
     CartController::class => function (Container $container) {
         $cartProductRepository = $container->get(CartProductsRepository::class);
         $productRepository = $container->get(ProductRepository::class);
-        $userRepository = $container->get(UserRepository::class);
+        $cartRepository = $container->get(CartRepository::class);
 
-        return new CartController($cartProductRepository, $productRepository, $userRepository);
+        return new CartController($cartProductRepository, $productRepository, $cartRepository);
     },
 
 

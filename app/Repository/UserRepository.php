@@ -44,34 +44,10 @@ class UserRepository
     }
 
 
-    public function getCartId(int $userId): int
-    {
-        $result = $this->connection->prepare("SELECT cart_id FROM users WHERE id = ?");
-        $result->execute([$userId]);
-
-        $data = $result->fetch();
-
-        return (int)$data;
-    }
-
-
     public function getUserByEmail(string $email): User|null
     {
         $result = $this->connection->prepare("SELECT * FROM users WHERE email = ?");
-        return $this->extracted($result, $email);
-    }
-
-
-    public function getUserByUserId(int $userId): User|null
-    {
-        $result = $this->connection->prepare("SELECT * FROM users WHERE id = ?");
-        return $this->extracted($result, $userId);
-    }
-
-
-    public function extracted(bool|\PDOStatement $result, int $userId): ?User
-    {
-        $result->execute([$userId]);
+        $result->execute([$email]);
 
         $data = $result->fetch();
 
@@ -85,7 +61,6 @@ class UserRepository
                 $data['password'],
             );
 
-            $user->setCartId($data['cart_id']);
             $user->setId($data['id']);
 
             return $user;
