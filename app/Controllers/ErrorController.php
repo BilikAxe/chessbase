@@ -2,14 +2,25 @@
 
 namespace banana\Controllers;
 
+use banana\ViewRenderer;
+
 class ErrorController
 {
-    public function error(): array
+    private ViewRenderer $renderer;
+
+
+    public function __construct(ViewRenderer $renderer)
     {
-        return [
+        $this->renderer = $renderer;
+    }
+
+
+    public function error(): ?string
+    {
+        return $this->renderer->render(
             '../Views/error404.html',
             [],
             false
-        ];
+        );
     }
 }

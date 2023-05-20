@@ -1,5 +1,11 @@
+<div class="cart">
+    <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="">
+    <span><?= $quantity; ?></span>
+</div>
 <form class="products" action="" method="POST">
+
     <div class="container_product">
+
         <div class="products">
             <?php foreach ($categories as $category): ?>
                 <div class="product">
@@ -15,10 +21,28 @@
                 </div>
             <?php endforeach; ?>
         </div>
+
     </div>
 </form>
 
 <style>
+    .cart img {
+        color: white;
+        width: 25px;
+        height: 25px;
+    }
+    .cart span {
+        color: black;
+        position: relative;
+        width: 30px;
+        height: 20px;
+        top: -8px;
+        right: 5px;
+        text-align: center;
+        font-size: 12px;
+        padding: 6px;
+        border-radius: 50%;
+    }
 
     :root{
         --bodyBack: #ffeaed;

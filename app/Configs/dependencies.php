@@ -3,6 +3,7 @@
 use banana\Container;
 use banana\Controllers\CartController;
 use banana\Controllers\CategoryController;
+use banana\Controllers\ErrorController;
 use banana\Controllers\ProductController;
 use banana\Controllers\UserController;
 use banana\FileLogger;
@@ -12,13 +13,16 @@ use banana\Repository\CartRepository;
 use banana\Repository\CategoryRepository;
 use banana\Repository\ProductRepository;
 use banana\Repository\UserRepository;
+use banana\ViewRenderer;
 
 
 return [
     UserController::class => function (Container $container) {
         $userRepository = $container->get(UserRepository::class);
+        $renderer = $container->get(ViewRenderer::class);
+        $cartRepository = $container->get(CartRepository::class);
 
-        return new UserController($userRepository);
+        return new UserController($userRepository, $renderer, $cartRepository);
     },
 
 
@@ -30,9 +34,12 @@ return [
 
 
     ProductController::class => function (Container $container) {
-        $productRepository = $container->get((ProductRepository::class));
+        $productRepository = $container->get(ProductRepository::class);
+        $cartRepository = $container->get(CartRepository::class);
+        $cartProductRepository = $container->get(CartProductsRepository::class);
+        $renderer = $container->get(ViewRenderer::class);
 
-        return new ProductController($productRepository);
+        return new ProductController($productRepository, $cartRepository, $cartProductRepository, $renderer);
     },
 
 
@@ -45,8 +52,11 @@ return [
 
     CategoryController::class => function (Container $container) {
         $categoryRepository = $container->get(CategoryRepository::class);
+        $cartRepository = $container->get(CartRepository::class);
+        $cartProductRepository = $container->get(CartProductsRepository::class);
+        $renderer = $container->get(ViewRenderer::class);
 
-        return new CategoryController($categoryRepository);
+        return new CategoryController($categoryRepository, $cartRepository, $cartProductRepository, $renderer);
     },
 
 
@@ -61,9 +71,10 @@ return [
         $cartProductRepository = $container->get(CartProductsRepository::class);
         $productRepository = $container->get(ProductRepository::class);
         $cartRepository = $container->get(CartRepository::class);
+        $renderer = $container->get(ViewRenderer::class);
         $connection = $container->get('db');
 
-        return new CartController($cartProductRepository, $productRepository, $cartRepository, $connection);
+        return new CartController($cartProductRepository, $productRepository, $cartRepository, $renderer, $connection);
     },
 
 
@@ -78,6 +89,13 @@ return [
         $connection = $container->get('db');
 
         return new CartRepository($connection);
+    },
+
+
+    ErrorController::class => function (Container $container) {
+        $renderer = $container->get(ViewRenderer::class);
+
+        return new ErrorController($renderer);
     },
 
 

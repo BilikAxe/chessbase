@@ -7,6 +7,7 @@ use banana\Entity\CartProduct;
 use banana\Repository\CartProductsRepository;
 use banana\Repository\CartRepository;
 use banana\Repository\ProductRepository;
+use banana\ViewRenderer;
 use PDO;
 
 
@@ -15,23 +16,26 @@ class CartController
     private CartProductsRepository $cartProductsRepository;
     private ProductRepository $productRepository;
     private CartRepository $cartRepository;
+    private ViewRenderer $renderer;
     private PDO $connection;
 
     public function __construct(
         CartProductsRepository $cartProductsRepository,
         ProductRepository $productRepository,
         CartRepository $cartRepository,
+        ViewRenderer $renderer,
         PDO $connection,
     )
     {
         $this->cartProductsRepository = $cartProductsRepository;
         $this->productRepository = $productRepository;
         $this->cartRepository = $cartRepository;
+        $this->renderer = $renderer;
         $this->connection = $connection;
     }
 
 
-    public function openCart(): array
+    public function openCart(): ?string
     {
         if(session_status() === PHP_SESSION_NONE){
             session_start();
@@ -41,17 +45,19 @@ class CartController
 
             $cartProducts = $this->cartProductsRepository->getByUser($_SESSION['id']);
 
-            return [
+            return $this->renderer->render(
                 '../Views/cart.phtml',
-                ['cartProducts' => $cartProducts],
-                true];
+                [
+                    'cartProducts' => $cartProducts
+                ],
+                true);
         }
 
-        return [];
+        return null;
     }
 
 
-    public function addToCart(): array
+    public function addToCart(): ?string
     {
         $errorMessage = [];
         $categoryId = $_POST['categoryId'];
@@ -101,11 +107,11 @@ class CartController
         }
 
 
-        return [
+        return $this->renderer->render(
             "../Views/category/$categoryId",
             ['errorMessage' => $errorMessage],
             true,
-        ];
+        );
 
     }
 

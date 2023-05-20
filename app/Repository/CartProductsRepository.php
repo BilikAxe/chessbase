@@ -94,16 +94,6 @@ class CartProductsRepository
     }
 
 
-    public function updateQuantity(CartProduct $cartProduct): void
-    {
-        $result = $this->connection->prepare("UPDATE cart_products SET quantity = :quantity WHERE product_id = :productId");
-        $result->execute([
-            'quantity' => $cartProduct->getQuantity(),
-            'productId' => $cartProduct->getProduct()->getId(),
-        ]);
-    }
-
-
     public function save(CartProduct $product): void
     {
         $result = $this->connection->prepare("
@@ -124,5 +114,22 @@ class CartProductsRepository
             'productId' => $product->getProduct()->getId(),
             'quantity' => $product->getQuantity() + 1,
         ]);
+    }
+
+
+    public function getQuantityByCart(int $cartId): int
+    {
+        $result = $this->connection->prepare(
+            "SELECT SUM(quantity) FROM cart_products WHERE cart_id = ? GROUP BY cart_id"
+        );
+        $result->execute([$cartId]);
+
+        $data = $result->fetch();
+
+        if ($data){
+            return $data['sum'];
+        }
+
+        return 0;
     }
 }

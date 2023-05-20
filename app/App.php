@@ -48,24 +48,8 @@ class App
                 $response = $handler();
             }
 
-            list($view, $param, $isLayout) = $response;
+            echo $response;
 
-            extract($param);
-
-            ob_start();
-
-            require_once $view;
-
-            if ($isLayout) {
-
-                $start = ob_get_clean();
-
-                $content = file_get_contents('../Views/layout.html');
-
-                $result = str_replace('{content}', $start, $content);
-
-                echo $result;
-            }
         } catch (\Throwable $exception) {
 
             $logger = $this->container->get(LoggerInterface::class);

@@ -2,20 +2,27 @@
 
 namespace banana\Controllers;
 
+use banana\Entity\Cart;
 use banana\Entity\User;
+use banana\Repository\CartRepository;
 use banana\Repository\UserRepository;
+use banana\ViewRenderer;
 
 class UserController
 {
     private UserRepository $userRepository;
+    private ViewRenderer $renderer;
+    private CartRepository $cartRepository;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, ViewRenderer $renderer, CartRepository $cartRepository)
     {
         $this->userRepository = $userRepository;
+        $this->renderer = $renderer;
+        $this->cartRepository = $cartRepository;
     }
 
 
-    public function signUp(): array
+    public function signUp(): ?string
     {
         $errorMessages = [];
 
@@ -42,11 +49,11 @@ class UserController
             }
         }
 
-        return [
+        return $this->renderer->render(
             '../Views/signup.phtml',
             ['errorMessages' => $errorMessages],
             false
-        ];
+        );
     }
 
 
@@ -193,7 +200,7 @@ class UserController
     }
 
 
-    public function signIn(): array
+    public function signIn(): ?string
     {
         if(session_status() === PHP_SESSION_NONE){
             session_start();
@@ -215,6 +222,8 @@ class UserController
                 if ($userData && password_verify($password, $userData->getPassword())) {
 
                     $_SESSION['id'] = $userData->getId();
+                    $cart = new Cart($userData->getId());
+                    $this->cartRepository->save($cart);
 
                     header("Location: /category");
                     die;
@@ -224,11 +233,11 @@ class UserController
             }
         }
 
-        return [
+        return $this->renderer->render(
             '../Views/signin.phtml',
             ['errorMessages' => $errorMessages],
             false
-        ];
+        );
     }
 
 
