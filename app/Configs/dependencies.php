@@ -61,8 +61,9 @@ return [
         $cartProductRepository = $container->get(CartProductsRepository::class);
         $productRepository = $container->get(ProductRepository::class);
         $cartRepository = $container->get(CartRepository::class);
+        $connection = $container->get('db');
 
-        return new CartController($cartProductRepository, $productRepository, $cartRepository);
+        return new CartController($cartProductRepository, $productRepository, $cartRepository, $connection);
     },
 
 

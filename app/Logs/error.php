@@ -133,3 +133,12 @@ An error occurred while processing the request:
 An error occurred while processing the request: 
 {"Message":"SQLSTATE[42P10]: Invalid column reference: 7 ERROR:  there is no unique or exclusion constraint matching the ON CONFLICT specification","File":"\/var\/www\/html\/app\/Repository\/CartProductsRepository.php","Line":125}
 
+An error occurred while processing the request: 
+{"Message":"Too few arguments to function banana\\Controllers\\CartController::__construct(), 3 passed in \/var\/www\/html\/app\/Configs\/dependencies.php on line 65 and exactly 4 expected","File":"\/var\/www\/html\/app\/Controllers\/CartController.php","Line":20}
+
+An error occurred while processing the request: 
+{"Message":"There is no active transaction","File":"\/var\/www\/html\/app\/Controllers\/CartController.php","Line":95}
+
+An error occurred while processing the request: 
+{"Message":"extract(): Argument #1 ($array) must be of type array, null given","File":"\/var\/www\/html\/app\/App.php","Line":53}
+
