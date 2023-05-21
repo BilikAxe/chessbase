@@ -42,7 +42,7 @@ class CartProductsRepository
                 $data['img'],
             );
 
-            $product->setId($data['id']);
+            $product->setId($data['product_id']);
 
             $cart = new Cart($data['user_id']);
 

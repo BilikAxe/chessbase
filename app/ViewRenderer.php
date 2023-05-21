@@ -12,15 +12,15 @@ class ViewRenderer
 
         require_once $view;
 
-        if ($isLayout) {
+        $start = ob_get_clean();
 
-            $start = ob_get_clean();
+        if ($isLayout) {
 
             $content = file_get_contents('../Views/layout.html');
 
             return str_replace('{content}', $start, $content);
         }
 
-        return null;
+        return $start;
     }
 }

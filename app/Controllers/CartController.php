@@ -2,36 +2,32 @@
 
 namespace banana\Controllers;
 
-use banana\Entity\Cart;
-use banana\Entity\CartProduct;
 use banana\Repository\CartProductsRepository;
 use banana\Repository\CartRepository;
-use banana\Repository\ProductRepository;
+use banana\Services\CartService;
 use banana\ViewRenderer;
-use PDO;
+use Throwable;
 
 
 class CartController
 {
     private CartProductsRepository $cartProductsRepository;
-    private ProductRepository $productRepository;
-    private CartRepository $cartRepository;
     private ViewRenderer $renderer;
-    private PDO $connection;
+    private CartService $cartService;
+    private CartRepository $cartRepository;
+
 
     public function __construct(
         CartProductsRepository $cartProductsRepository,
-        ProductRepository $productRepository,
-        CartRepository $cartRepository,
         ViewRenderer $renderer,
-        PDO $connection,
+        CartService $cartService,
+        CartRepository $cartRepository,
     )
     {
         $this->cartProductsRepository = $cartProductsRepository;
-        $this->productRepository = $productRepository;
-        $this->cartRepository = $cartRepository;
         $this->renderer = $renderer;
-        $this->connection = $connection;
+        $this->cartService = $cartService;
+        $this->cartRepository = $cartRepository;
     }
 
 
@@ -57,62 +53,34 @@ class CartController
     }
 
 
-    public function addToCart(): ?string
+    /**
+     * @throws Throwable
+     */
+    public function addToCart(): void
     {
-        $errorMessage = [];
-        $categoryId = $_POST['categoryId'];
-        $productId = $_POST['productId'];
-
         if(session_status() === PHP_SESSION_NONE){
             session_start();
         }
 
         if (isset($_SESSION['id'])) {
 
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $categoryId = $_POST['categoryId'];
 
-                $errorMessage = $this->validate($categoryId);
-                    
-                if (empty($errorMessage)) {
+            $errorMessage = $this->validate($categoryId);
 
-                    $userId = $_SESSION['id'];
-                    $cartProduct = $this->cartProductsRepository->getOne($productId, $userId);
-                    $cart = $this->cartRepository->getByUser($userId);
-                    
-                    $this->connection->beginTransaction();
+            if (empty($errorMessage)) {
+                $userId = $_SESSION['id'];
+                $productId = $_POST['productId'];
 
-                    try {
-                        if (empty($cart)){
-                            $cart = new Cart($userId);
-                            $this->cartRepository->save($cart);
-                        }
+                $cartProduct = $this->cartProductsRepository->getOne($productId, $userId);
+                $cart = $this->cartRepository->getByUser($userId);
 
-                        if (empty($cartProduct)) {
-                            $product = $this->productRepository->getProduct($productId);
-                            $cartProduct = new CartProduct($product, $cart, 0);
-                        }
+                $this->cartService->addProduct($cart, $cartProduct);
 
-                        $this->cartProductsRepository->save($cartProduct);
-
-                    } catch (\Throwable) {
-                        $this->connection->rollBack();
-                    }
-
-                    $this->connection->commit();
-
-                    header("Location: /category/$categoryId");
-                    die;
-                }
+                header("Location: /category/$categoryId");
+                die;
             }
         }
-
-
-        return $this->renderer->render(
-            "../Views/category/$categoryId",
-            ['errorMessage' => $errorMessage],
-            true,
-        );
-
     }
 
 
