@@ -15,37 +15,37 @@
                     <h4>$ <?= $product->getPrice(); ?></h4>
                 </div>
                 <p></p>
-                <form action="/add" method="POST" id="cart-form">
+                <form class="my-form" action="/add" method="POST" id="myForm">
                     <div class="bay">
-                        <input type="hidden" name="productId" value=<?= $product->getId(); ?>>
-                        <input type="hidden" name="categoryId" value="<?= $categoryId; ?>">
-                        <button type="submit">Add to cart</button>
+                        <input type="hidden" id="productId" name="productId" value=<?= $product->getId(); ?>>
+                        <input type="hidden" id="categoryId" name="categoryId" value="<?= $categoryId; ?>">
+                        <button type="submit" id="butn">Add to cart</button>
                     </div>
                 </form>
             </div>
         <?php endforeach; ?>
     </div>
 </div>
-
+<script
+        src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+        crossorigin="anonymous"></script>
 <script type="text/javascript">
 
-    $(function() {
-        $(document).on("submit", "#bay", function() {
-            var e = this;
-            $(this).find("[type='submit']").html("");
-            $.ajax({
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
-                type: "POST",
-                dataType: 'json',
-                success: function (data) {
-                    alert(data.status);
-                    $('.qty').find().html(data.quantity);
-                }
+    $(document).ready(function () {
+        $('.my-form button').click(function (){
+            var parent = $(this).parent();
+            var categoryId = parent.find("[name='categoryId']").attr('value');
+            var productId = parent.find("[name='productId']").attr('value');
+            $.post( "/add", {categoryId: categoryId, productId: productId}, function( data ) {
+                alert(data);
+
             });
             return false;
         });
     });
+
+
 </script>
 
 <style>

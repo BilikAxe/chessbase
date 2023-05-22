@@ -8,7 +8,6 @@ use banana\Services\CartService;
 use banana\ViewRenderer;
 use Throwable;
 
-
 class CartController
 {
     private CartProductsRepository $cartProductsRepository;
