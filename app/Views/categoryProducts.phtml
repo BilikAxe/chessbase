@@ -38,8 +38,7 @@
             var categoryId = parent.find("[name='categoryId']").attr('value');
             var productId = parent.find("[name='productId']").attr('value');
             $.post( "/add", {categoryId: categoryId, productId: productId}, function( data ) {
-                alert(data);
-
+                $('.qty').html(data);
             });
             return false;
         });

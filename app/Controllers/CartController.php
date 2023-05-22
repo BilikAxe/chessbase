@@ -54,7 +54,7 @@ class CartController
     /**
      * @throws Throwable
      */
-    public function addToCart(): void
+    public function addToCart(): int
     {
 //        print_r($_POST);die;
         if(session_status() === PHP_SESSION_NONE){
@@ -75,10 +75,13 @@ class CartController
 
                 $this->cartService->addProduct($userId, $product);
 
-                header("Location: /category/$categoryId");
-                die;
+                $cart = $this->cartService->getCart($userId);
+
+                return $this->cartProductsRepository->getQuantityByCart($cart->getId());
             }
         }
+
+        return 0;
     }
 
 
