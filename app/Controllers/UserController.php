@@ -14,8 +14,11 @@ class UserController
     private ViewRenderer $renderer;
     private CartRepository $cartRepository;
 
-    public function __construct(UserRepository $userRepository, ViewRenderer $renderer, CartRepository $cartRepository)
-    {
+    public function __construct(
+        UserRepository $userRepository,
+        ViewRenderer $renderer,
+        CartRepository $cartRepository
+    ) {
         $this->userRepository = $userRepository;
         $this->renderer = $renderer;
         $this->cartRepository = $cartRepository;

@@ -40,14 +40,15 @@ class ProductController
             $cart = $this->cartRepository->getByUser($_SESSION['id']);
             $quantity = $this->cartProductsRepository->getQuantityByCart($cart->getId());
 
-            return $this->renderer->render(
+            return json_encode([
                 '../Views/categoryProducts.phtml',
                 [
                     'products' => $products,
                     'categoryId' => $categoryId,
                     'quantity' => $quantity,
                 ],
-                true);
+                true
+            ]);
         }
 
         header("Location: /signin");

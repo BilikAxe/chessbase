@@ -20,8 +20,7 @@ class CategoryController
         CartRepository $cartRepository,
         CartProductsRepository $cartProductsRepository,
         ViewRenderer $renderer,
-    )
-    {
+    ) {
         $this->categoryRepository = $categoryRepository;
         $this->cartRepository = $cartRepository;
         $this->cartProductsRepository = $cartProductsRepository;

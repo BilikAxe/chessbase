@@ -4,43 +4,52 @@ namespace banana\Services;
 
 use banana\Entity\Cart;
 use banana\Entity\CartProduct;
+use banana\Entity\Product;
 use banana\Repository\CartProductsRepository;
 use banana\Repository\CartRepository;
-use banana\Repository\ProductRepository;
 use PDO;
 
 class CartService
 {
     private PDO $connection;
     private CartRepository $cartRepository;
-    private ProductRepository $productRepository;
     private CartProductsRepository $cartProductsRepository;
 
 
-    public function __construct(PDO $connection, CartRepository $cartRepository, ProductRepository $productRepository, CartProductsRepository $cartProductsRepository)
-    {
+    public function __construct(
+        PDO $connection,
+        CartRepository $cartRepository,
+        CartProductsRepository $cartProductsRepository
+    ) {
         $this->connection = $connection;
         $this->cartRepository = $cartRepository;
-        $this->productRepository = $productRepository;
         $this->cartProductsRepository = $cartProductsRepository;
     }
 
 
-    public function addProduct(Cart $cart, CartProduct $cartProduct): void
+    public function getCart(int $userId): Cart
     {
-        $userId = $_SESSION['id'];
-        $productId = $_POST['productId'];
+        $cart = $this->cartRepository->getByUser($userId);
 
+        if (empty($cart)) {
+            $cart = new Cart($userId);
+            $this->cartRepository->save($cart);
+        }
+
+        return $cart;
+    }
+
+
+    public function addProduct(int $userId, Product $product): void
+    {
         $this->connection->beginTransaction();
 
         try {
-            if (empty($cart)){
-                $cart = new Cart($userId);
-                $this->cartRepository->save($cart);
-            }
+            $cart = $this->getCart($userId);
+            $productId = $product->getId();
+            $cartProduct = $this->cartProductsRepository->getOne($productId, $userId);
 
             if (empty($cartProduct)) {
-                $product = $this->productRepository->getProduct($productId);
                 $cartProduct = new CartProduct($product, $cart, 0);
             }
 

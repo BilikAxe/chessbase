@@ -1,6 +1,6 @@
-<div class="cart">
+<div class="cart" id="quantity">
     <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="">
-    <span><?= $quantity; ?></span>
+    <span class="qty"><?= $quantity; ?></span>
 </div>
 <div class="container_product">
 
@@ -15,17 +15,39 @@
                     <h4>$ <?= $product->getPrice(); ?></h4>
                 </div>
                 <p></p>
-                <form action="/add" method="POST">
+                <form action="/add" method="POST" id="cart-form">
                     <div class="bay">
                         <input type="hidden" name="productId" value=<?= $product->getId(); ?>>
                         <input type="hidden" name="categoryId" value="<?= $categoryId; ?>">
-                        <button>Add to cart</button>
+                        <button type="submit">Add to cart</button>
                     </div>
                 </form>
             </div>
         <?php endforeach; ?>
     </div>
 </div>
+
+<script type="text/javascript">
+
+    $(function() {
+        $(document).on("submit", "#bay", function() {
+            var e = this;
+            $(this).find("[type='submit']").html("");
+            $.ajax({
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                type: "POST",
+                dataType: 'json',
+                success: function (data) {
+                    alert(data.status);
+                    $('.qty').find().html(data.quantity);
+                }
+            });
+            return false;
+        });
+    });
+</script>
+
 <style>
     .cart img {
         color: white;

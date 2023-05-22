@@ -3,7 +3,7 @@
 namespace banana\Controllers;
 
 use banana\Repository\CartProductsRepository;
-use banana\Repository\CartRepository;
+use banana\Repository\ProductRepository;
 use banana\Services\CartService;
 use banana\ViewRenderer;
 use Throwable;
@@ -14,20 +14,19 @@ class CartController
     private CartProductsRepository $cartProductsRepository;
     private ViewRenderer $renderer;
     private CartService $cartService;
-    private CartRepository $cartRepository;
+    private ProductRepository $productRepository;
 
 
     public function __construct(
         CartProductsRepository $cartProductsRepository,
         ViewRenderer $renderer,
         CartService $cartService,
-        CartRepository $cartRepository,
-    )
-    {
+        ProductRepository $productRepository,
+    ) {
         $this->cartProductsRepository = $cartProductsRepository;
         $this->renderer = $renderer;
         $this->cartService = $cartService;
-        $this->cartRepository = $cartRepository;
+        $this->productRepository = $productRepository;
     }
 
 
@@ -58,6 +57,7 @@ class CartController
      */
     public function addToCart(): void
     {
+//        print_r($_POST);die;
         if(session_status() === PHP_SESSION_NONE){
             session_start();
         }
@@ -72,10 +72,9 @@ class CartController
                 $userId = $_SESSION['id'];
                 $productId = $_POST['productId'];
 
-                $cartProduct = $this->cartProductsRepository->getOne($productId, $userId);
-                $cart = $this->cartRepository->getByUser($userId);
+                $product = $this->productRepository->getProduct($productId);
 
-                $this->cartService->addProduct($cart, $cartProduct);
+                $this->cartService->addProduct($userId, $product);
 
                 header("Location: /category/$categoryId");
                 die;
